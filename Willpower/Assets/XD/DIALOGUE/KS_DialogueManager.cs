@@ -13,6 +13,9 @@ public class KS_DialogueManager : MonoBehaviour
     private KS_DialogueActivator dialAct;
 
 
+    [SerializeField] private AudioSource audioSource;
+    public AudioClip au1;
+
     public Animator animator; 
 
     private Queue<string> sentences;
@@ -54,6 +57,7 @@ public class KS_DialogueManager : MonoBehaviour
         string sentence = sentences.Dequeue();
         StopAllCoroutines();
         StartCoroutine(TypeSentence(sentence));
+        StartCoroutine(soundPlay());
 
     }
 
@@ -63,15 +67,25 @@ public class KS_DialogueManager : MonoBehaviour
         dialogueText.text = "";
         foreach (char letter in sentence.ToCharArray())
         {
+            
             dialogueText.text += letter;
             yield return new WaitForSeconds((float)0.025);
         }
+        StopAllCoroutines();
     }
 
 
+    IEnumerator soundPlay()
+    {
+        yield return new WaitForSeconds((float)0.1);
+        audioSource.pitch = Random.Range((float)0.9, (float)1.1);
+        audioSource.PlayOneShot(au1);
+        StartCoroutine(soundPlay());
+    }
+
     public void EndDialogue()
     {
-
+        StopAllCoroutines();
         animator.SetBool("IsOpen", false);
         dialAct.isTalking = false;
     }
