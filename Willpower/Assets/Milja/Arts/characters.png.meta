@@ -119,10 +119,10 @@ TextureImporter:
       name: will
       rect:
         serializedVersion: 2
-        x: 62
+        x: 33
         y: 28
-        width: 59
-        height: 67
+        width: 88
+        height: 69
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,9 +141,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 133
-        y: 22
-        width: 28
-        height: 77
+        y: 23
+        width: 27
+        height: 76
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -204,9 +204,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 232
-        y: 24
-        width: 40
-        height: 52
+        y: 25
+        width: 39
+        height: 51
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -216,6 +216,27 @@ TextureImporter:
       bones: []
       spriteID: 565cfb16282024f4ebdfcfad273c3375
       internalID: 808478039
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: doge
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 28
+        width: 25
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 430feebb9bd8fa64980d8b64098f0663
+      internalID: 785847840
       vertices: []
       indices: 
       edges: []
@@ -235,6 +256,7 @@ TextureImporter:
       wife: 1477594807
       grandpa: 808478039
       will: -1042880265
+      doge: 785847840
       child: -1425829315
   spritePackingTag: 
   pSDRemoveMatte: 0

@@ -22,11 +22,11 @@ public class AnswerBox : MonoBehaviour
         {
             case GameManager.Character.Taenia:
                 nameText.text = "Taenia the Wife";
-                replyText.text = "How can this happen? You were just fine before the lunch...";
+                replyText.text = "How can this happen? You were just fine before the lunch I prepared...";
                 charSprite.GetComponent<Image>().sprite = FindSpriteWithName("wife");
                 break;
             case GameManager.Character.Willow:
-                nameText.text = "Willow the Daughter";
+                nameText.text = "Willow the Kid";
                 replyText.text = "...";
                 charSprite.GetComponent<Image>().sprite = FindSpriteWithName("willow");
                 break;
@@ -42,6 +42,7 @@ public class AnswerBox : MonoBehaviour
                 break;
             case GameManager.Character.Doge:
                 nameText.text = "Doge";
+                replyText.text = "Arf?";
                 charSprite.GetComponent<Image>().sprite = FindSpriteWithName("doge");
                 break;
             default:
