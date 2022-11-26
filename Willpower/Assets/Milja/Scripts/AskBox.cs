@@ -119,7 +119,7 @@ public class AskBox : MonoBehaviour
         questionsMortti.Add(("How did we become friends?", "Was it during our class trip to the zoo? We had to stay at school since I was allergic to all the animals and your father didn't want you to have any fun."));
         questionsMortti.Add(("What is your family like?","I'm the happiest dad in the world. My wife is an appreciated doctor and my sons are such a gentlemen. I make sure that there is always time for my family!"));
         questionsMortti.Add(("What do you think about my company?", "Your company? Isn't it a IT company? I know something about computers but not that much."));
-        questionsMortti.Add(("Are you sad about my death?", "Of course I am. "));
+        questionsMortti.Add(("Are you sad about my death?", "Of course I am. I am your best buddy."));
 
         questionsFather.Add(("What are you doing here?", "Just give me your company, you know your good-for-nothing daughter or devious wife deserve nothing."));
         questionsFather.Add(("Don't you have anything else to do?", "I would love to be in my cottage reading books and listening to birds, so yes. But someone has to be here knocking some sense into you."));
