@@ -134,7 +134,6 @@ public class Draggable : MonoBehaviour
     #region ANIMATIONS
     private void Highlight()
     {
-        Debug.Log("Highlighting");
         animator.Play("Highlight");
     }
     #endregion
