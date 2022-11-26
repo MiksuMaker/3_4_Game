@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class KS_MakeBullet : MonoBehaviour
 {
+    public Camera cameraToLookAt;
     // Start is called before the first frame update
     void Start()
     {
-        
+        cameraToLookAt = FindObjectOfType<Camera>();
     }
 
     // Update is called once per frame
@@ -19,7 +20,7 @@ public class KS_MakeBullet : MonoBehaviour
             if (bullet != null)
             {
                 bullet.transform.position = this.transform.position;
-                bullet.transform.rotation = this.transform.rotation;
+                bullet.transform.rotation = cameraToLookAt.transform.rotation;
                 KS_Bullet bul = bullet.GetComponent<KS_Bullet>();
                 bul.ResetStuff();
                 bullet.SetActive(true);
