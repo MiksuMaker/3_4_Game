@@ -9,6 +9,7 @@ public class Draggable : MonoBehaviour
     Animator animator;
 
 
+
     [Header("Health")]
     [SerializeField]
     float velocityHurtLimit = 5f;
@@ -23,6 +24,13 @@ public class Draggable : MonoBehaviour
     [SerializeField]
     float velocityLimit = 5f;
     Vector2 currentVelocity;
+
+    public enum Layer
+    {
+        idle, flying
+    }
+    public Layer currentLayer = Layer.idle;
+    private float flyTime;
 
 
     public Rigidbody2D rb;
@@ -52,6 +60,9 @@ public class Draggable : MonoBehaviour
 
         // Set health
         health = MAXhealth;
+
+        // Start the FlyTImer
+        StartCoroutine(FlyTimer());
 
     }
 
@@ -91,17 +102,23 @@ public class Draggable : MonoBehaviour
         beingDragged = isBeingDragged;
     }
 
+    public void InitializeDrag()
+    {
+        ChangeLayer(Layer.flying);
+    }
+
     public void DragMeAround(Vector2 mousePos, float dragForce)
     {
         // Get the distance between mouse and this object
 
 
         // Add the Force
-        //AddAccordingForce(mousePos, dragForce);
         rb.AddForce(GetDirection(mousePos) * dragForce, ForceMode2D.Force);
-        //rb.AddForce(GetDirection(mousePos) * dragForce, ForceMode2D.Impulse);
 
-        Highlight();
+        
+
+        // Keep the timer running
+        flyTime = 1f;
     }
 
     private void AddAccordingForce(Vector2 mousePos, float dragForce)
@@ -162,6 +179,50 @@ public class Draggable : MonoBehaviour
 
             // Damage yourself too
             TakeDamage(rb.velocity.magnitude);
+        }
+    }
+
+    private void ChangeLayer(Layer layer)
+    {
+        switch (layer)
+        {
+            case Layer.idle:
+                gameObject.layer = LayerMask.NameToLayer("Draggable");
+
+                break;
+            // ======================
+            case Layer.flying:
+                gameObject.layer = LayerMask.NameToLayer("Flying");
+
+                break;
+        }
+    }
+
+    IEnumerator FlyTimer()
+    {
+        while (true)
+        {
+            if (gameObject.layer == LayerMask.NameToLayer("Flying"))
+            {
+
+
+                // Keep the Layer on Flying as long as the timer hasn't run out
+
+                while (flyTime > 0)
+                {
+                    flyTime -= Time.deltaTime;
+
+                    // UI
+                    Highlight();
+
+                    yield return new WaitForFixedUpdate();
+                }
+
+                // Change the Layer back to Draggable
+                ChangeLayer(Layer.idle);
+            }
+
+            yield return new WaitForSeconds(0.1f);
         }
     }
     #endregion

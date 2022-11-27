@@ -5,11 +5,11 @@ using UnityEngine;
 public class ProtagController : MonoBehaviour
 {
     #region PROPERTIES
-    [Header("Gamemode")]
     bool selfTelekinesisOn = false;
 
 
     // Movement
+    [Header("Movement")]
     [SerializeField]
     float moveSpeed = 5f;
     [SerializeField]
@@ -43,6 +43,7 @@ public class ProtagController : MonoBehaviour
     AnimationState currentAnimation = AnimationState.idle;
     int orientation = 1; // 1 is LEFT, -1 is RIGHT
 
+    //[Header("Health")]
 
     #endregion
 

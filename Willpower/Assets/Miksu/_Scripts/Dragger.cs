@@ -80,7 +80,9 @@ public class Dragger : MonoBehaviour
         // Get reference to the Dragger scripts
         foreach (Collider2D collider in collidersInPull)
         {
-            objectsInPull.Add(collider.GetComponent<Draggable>());
+            Draggable obj = collider.GetComponent<Draggable>();
+            obj.InitializeDrag();
+            objectsInPull.Add(obj);
         }
 
         // Add random torque
