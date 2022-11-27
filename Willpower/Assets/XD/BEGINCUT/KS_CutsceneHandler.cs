@@ -15,6 +15,11 @@ public class KS_CutsceneHandler : MonoBehaviour
     
     [SerializeField] private GameObject image_start;
 
+
+    [SerializeField] GameObject midSprite1;
+    [SerializeField] GameObject midSprite2;
+    [SerializeField] GameObject endSprite;
+
     string phase = "START";
     int phase_alt = 0;
     bool con = true;
@@ -32,6 +37,9 @@ public class KS_CutsceneHandler : MonoBehaviour
     {
         dialMana = FindObjectOfType<KS_DialogueManager>();
         musicPlayer = FindObjectOfType<KS_Music>();
+        midSprite1.SetActive(false);
+        midSprite2.SetActive(false);
+        endSprite.SetActive(false);
 
     }
 
@@ -68,18 +76,24 @@ public class KS_CutsceneHandler : MonoBehaviour
                     case 1: startBgAnimator.SetBool("FADEOUT", false); phase_alt++;break;
                     case 2: dialMana.StartDialogue(cut_middle); phase_alt++; break;
                     case 5: dialMana.name = ""; phase_alt++;break;
-                    case 7: dialMana.name = "wizard gäng";musicPlayer.musicStop();phase_alt++;
-
+                    case 8: dialMana.name = "wizard gäng";musicPlayer.musicStop();phase_alt++;
+                        midSprite1.SetActive(true);
+                        midSprite2.SetActive(true);
                         player.gameObject.transform.position = wizSpa.gameObject.transform.position;
                         break;
                     case 11: musicPlayer.musicPlay(musicPlayer.mu_end);phase_alt++;break;
                     case 12: startBgAnimator.SetBool("XDIMENSIO", true);
                         player.CanMove = true;StartCoroutine(wizSpa.SpawnWizards()); player.CanShoot = true; phase_alt++;
+
+                        midSprite1.SetActive(false);
+                        midSprite2.SetActive(false);
                         break;
                     case 14:
                         phase_alt = 0;
                         phase = "END";
                         break;
+
+
                     default: if (click()) { dial_c(); phase_alt++; }; break;
 
                 }
@@ -94,7 +108,8 @@ public class KS_CutsceneHandler : MonoBehaviour
                 {
                     case 0: 
                         if (wizSpa.areAllWizardsLikePwnedOrSomething()){
-                            wait(5); phase_alt++;
+                            wait(2); phase_alt++;
+                            musicPlayer.musicFadeOut();
                         }
                         break;
                     case 1:
@@ -104,8 +119,13 @@ public class KS_CutsceneHandler : MonoBehaviour
                         wait(1);
                         break;
                     case 2:
-                        dialMana.StartDialogue(cut_middle); phase_alt++; 
+                        dialMana.StartDialogue(cut_end); phase_alt++;
+
+                        endSprite.SetActive(true);
                         break;
+
+                    default: if (click()) { dial_c(); phase_alt++; }; break;
+
 
 
                 } 
