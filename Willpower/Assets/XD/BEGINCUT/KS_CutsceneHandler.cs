@@ -20,6 +20,8 @@ public class KS_CutsceneHandler : MonoBehaviour
     [SerializeField] GameObject midSprite2;
     [SerializeField] GameObject endSprite;
 
+    private KS_Billboard[] letsRemoveTheseShallWe;
+
     string phase = "START";
     int phase_alt = 0;
     bool con = true;
@@ -40,6 +42,8 @@ public class KS_CutsceneHandler : MonoBehaviour
         midSprite1.SetActive(false);
         midSprite2.SetActive(false);
         endSprite.SetActive(false);
+
+        letsRemoveTheseShallWe = FindObjectsOfType<KS_Billboard>();
 
     }
 
@@ -79,6 +83,12 @@ public class KS_CutsceneHandler : MonoBehaviour
                     case 8: dialMana.name = "wizard gäng";musicPlayer.musicStop();phase_alt++;
                         midSprite1.SetActive(true);
                         midSprite2.SetActive(true);
+
+                        foreach (KS_Billboard billi in letsRemoveTheseShallWe)
+                        {
+                            billi.gameObject.SetActive(false);
+                        }
+
                         player.gameObject.transform.position = wizSpa.gameObject.transform.position;
                         break;
                     case 11: musicPlayer.musicPlay(musicPlayer.mu_end);phase_alt++;break;
