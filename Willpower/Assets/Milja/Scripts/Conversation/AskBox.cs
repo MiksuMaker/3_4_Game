@@ -169,7 +169,7 @@ public class AskBox : MonoBehaviour
         questionsWillow.Add(("Are you sad about my death?", "Taenia said she will buy me a new bicycle if I don't bother her with crying."));
 
         //Mortti questions
-        questionsMortti.Add(("What would you like to inherit?", "If I could make a wish... Maybe your house? Our current house is way too small and poor."));
+        questionsMortti.Add(("What would you like to inherit?", "If I could make a wish... Maybe your house? We are soon losing our current house so we would really need a new one."));
         questionsMortti.Add(("What do you think about my family?", "I have only met your father. What a man. True hero. I always wanted to grow up like him."));
         questionsMortti.Add(("How are your life?", "I'm still searching for my calling. Maybe I'll become a musician one day. Or a professional golfer."));
         questionsMortti.Add(("How did we become friends?", "Was it during our class trip to the zoo? We had to stay at school since I was allergic to all the animals and your father didn't want you to have any fun."));
@@ -178,7 +178,7 @@ public class AskBox : MonoBehaviour
         questionsMortti.Add(("Are you sad about my death?", "Of course I am. I am your best buddy."));
 
         questionsFather.Add(("What are you doing here?", "Just give me your company, you know your good-for-nothing daughter or devious wife deserve nothing."));
-        questionsFather.Add(("Don't you have anything else to do?", "I would love to be in my cottage reading books and listening to birds, so yes. But someone has to be here knocking some sense into you."));
+        questionsFather.Add(("Don't you have anything else to do?", "I would love to be in my cottage reading books and listening to birds, so yes I have. But someone has to be here knocking some sense into you."));
         questionsFather.Add(("Do you remember the day I was born?", "I always wanted to have a 3D-child, but no. I got a two dimensional wimp."));
         questionsFather.Add(("What do you think about my wife?", "I have always tried to tell you that witch is poisoning you. Well, now it's too late."));
         questionsFather.Add(("What do you think about Willow?", "That brat is nowhere as ugly as you were as a child, but I hope she never tries to touch me again."));

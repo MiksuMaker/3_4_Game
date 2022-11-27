@@ -66,7 +66,7 @@ public class WillScript : MonoBehaviour
 
     IEnumerator WaitAfterSign()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         end.SetActive(true);
         gameObject.SetActive(false);
     }
