@@ -33,10 +33,17 @@ public class ProtagController : MonoBehaviour
         horizontal, selfTelekinesis, hurt, dead
     }
 
-    private enum ProtagAnimation
+    // ANIMATION
+    Animator animator;
+    GameObject graphics;
+    private enum AnimationState
     {
         idle, run, hover, hurt
     }
+    AnimationState currentAnimation = AnimationState.idle;
+    int orientation = 1; // 1 is LEFT, -1 is RIGHT
+
+
     #endregion
 
     #region BUILTIN
@@ -44,6 +51,8 @@ public class ProtagController : MonoBehaviour
     {
         // Get references
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponentInChildren<Animator>();
+        graphics = animator.gameObject;
     }
 
     private void Update()
@@ -100,6 +109,10 @@ public class ProtagController : MonoBehaviour
             // Switch mode
             if (selfTelekinesisOn)
             {
+                // Play Animation
+                PlayAnimation(AnimationState.hover);
+
+                // Switch
                 currentMode = GameMode.selfTelekinesis;
             }
             else
@@ -121,19 +134,29 @@ public class ProtagController : MonoBehaviour
         if (Input.GetKey(KeyCode.A))
         {
             moveDir += new Vector2(-1f, 0f);
+            orientation = 1;
             inputsThisFrame = true;
         }
         // D
         if (Input.GetKey(KeyCode.D))
         {
             moveDir += new Vector2(1f, 0f);
+            orientation = -1;
             inputsThisFrame = true;
         }
 
         // Check if any inputs
         if (moveDir.x != 0f)
         {
+            // Play RUN animation
+            PlayAnimation(AnimationState.run);
+
             MoveHorizontal();
+        }
+        else
+        {
+            // Play IDLE Animation
+            PlayAnimation(AnimationState.idle);
         }
     }
 
@@ -176,6 +199,13 @@ public class ProtagController : MonoBehaviour
                                        GetMousePos(),
                                        hoverSpeed * Time.deltaTime);
 
+        #region Orientation
+        if (nextPos.x < transform.position.x)
+        { orientation = 1; }        // Left
+        else { orientation = -1; }  // Right
+        CheckOrientation();
+        #endregion
+
         Debug.DrawLine(transform.position, nextPos);
         // Clamp
         nextPos = Vector2.ClampMagnitude(nextPos, maxHoverSpeed);
@@ -186,7 +216,6 @@ public class ProtagController : MonoBehaviour
         //rb.MovePosition(nextPos);
         rb.MovePosition(nextPos);
     }
-    #endregion
 
     private void InheritHoverMomentum()
     {
@@ -202,4 +231,66 @@ public class ProtagController : MonoBehaviour
     {
         return Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
+
+    #endregion
+
+
+    #region ANIMATIONS
+    private void PlayAnimation(AnimationState state)
+    {
+        currentAnimation = state;
+
+        // Check correct orientation
+        CheckOrientation();
+
+        switch (state)
+        {
+            case AnimationState.idle:
+
+                animator.Play("Protag_Idle");
+
+                break;
+
+            // =========================
+
+            case AnimationState.run:
+
+                animator.Play("Protag_Run");
+
+                break;
+
+            // =========================
+
+            case AnimationState.hover:
+
+                animator.Play("Protag_Hover");
+
+                break;
+
+            // =========================
+
+            case AnimationState.hurt:
+
+                animator.Play("Protag_Hurt");
+
+                break;
+
+            // =========================
+            default:
+                break;
+
+        }
+    }
+
+    private void CheckOrientation()
+    {
+        // 'Orientation' variable is modified in CheckMoveHorizontal()
+
+        // LEFT: +1,    RIGHT: -1
+        Vector3 scale = new Vector3(orientation, 1f, 1f);
+
+        // Set scale
+        graphics.transform.localScale = scale;
+    }
+    #endregion
 }
