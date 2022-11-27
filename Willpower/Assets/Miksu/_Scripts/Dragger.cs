@@ -9,11 +9,14 @@ public class Dragger : MonoBehaviour
 
     #region PROPERTIES
     // Delegate
+    public delegate void ToggleDrag(bool onOff);
+    public delegate ToggleDrag ToggleGlobalDrag(bool onOff);
     //public delegate bool CheckDragList(Draggable draggable);
     //public delegate CheckDragList CheckIfOnList(Draggable draggable);
 
     // References
     Camera camera;
+    BoxCollider2D boxCollider;
     [SerializeField] LayerMask targetMask;
     Collider2D[] collidersInPull;
     List<Draggable> objectsInPull = new List<Draggable>();
@@ -36,6 +39,7 @@ public class Dragger : MonoBehaviour
     private void Start()
     {
         camera = Camera.main;
+        boxCollider = GetComponent<BoxCollider2D>();
     }
 
     private void OnDrawGizmos()
@@ -49,6 +53,12 @@ public class Dragger : MonoBehaviour
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(mousePos, grabRadius);
         }
+    }
+
+    private void ToggleDragging(bool onOff)
+    {
+        // Switch Box collider on or off
+        boxCollider.enabled = onOff;
     }
     #endregion
 
@@ -89,7 +99,10 @@ public class Dragger : MonoBehaviour
         // Drag the things
         foreach (Draggable obj in objectsInPull)
         {
-            obj.DragMeAround(mousePos, grabForce);
+            if (obj != null)
+            {
+                obj.DragMeAround(mousePos, grabForce);
+            }
         }
     }
 

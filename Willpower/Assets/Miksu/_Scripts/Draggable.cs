@@ -9,9 +9,13 @@ public class Draggable : MonoBehaviour
     Animator animator;
 
 
+    [Header("Health")]
     [SerializeField]
-    int MAXhealth = 10;
-    int health;
+    float velocityHurtLimit = 5f;
+    [SerializeField]
+    float MAXhealth = 10;
+    [SerializeField]
+    float health;
 
     [Header("Physics")]
     [SerializeField]
@@ -19,6 +23,7 @@ public class Draggable : MonoBehaviour
     [SerializeField]
     float velocityLimit = 5f;
     Vector2 currentVelocity;
+
 
     public Rigidbody2D rb;
 
@@ -45,6 +50,9 @@ public class Draggable : MonoBehaviour
         // Find the Animator
         animator = GetComponentInChildren<Animator>();
 
+        // Set health
+        health = MAXhealth;
+
     }
 
     private void FixedUpdate()
@@ -70,7 +78,7 @@ public class Draggable : MonoBehaviour
             {
                 // Not in drag
                 // -->  Don't do a thing
-                Debug.Log("Freefalling");
+                //Debug.Log("Freefalling");
             }
         }
         #endregion
@@ -134,7 +142,52 @@ public class Draggable : MonoBehaviour
     #region ANIMATIONS
     private void Highlight()
     {
-        animator.Play("Highlight");
+        if (animator != null)
+        {
+            animator.Play("Highlight");
+        }
+    }
+    #endregion
+
+    #region COLLISIONS
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        //Debug.Log("Velocity: " + rb.velocity.magnitude);
+
+        // Test how hard you hit something
+        if (rb.velocity.magnitude >= velocityHurtLimit)
+        {
+            // Try to damage the other object
+
+
+            // Damage yourself too
+            TakeDamage(rb.velocity.magnitude);
+        }
+    }
+    #endregion
+
+
+    #region DAMAGE
+    private void TakeDamage(float amount)
+    {
+        Debug.Log("Damage taken: " + amount);
+
+        // Take damage
+        health -= amount;
+
+        // Check if destroyed
+        if (health <= 0f)
+        {
+            BeDestroyed();
+        }
+    }
+
+    private void BeDestroyed()
+    {
+        // Play animation
+
+        // Die
+        Destroy(gameObject);
     }
     #endregion
 }
