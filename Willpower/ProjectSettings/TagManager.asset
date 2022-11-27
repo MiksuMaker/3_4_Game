@@ -3,12 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Bullet
+  - Wizard
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ground
   - Water
   - UI
   - 
@@ -16,8 +18,8 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - Player
+  - Bullet
   - 
   - 
   - 

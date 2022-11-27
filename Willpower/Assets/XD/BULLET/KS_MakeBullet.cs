@@ -5,6 +5,9 @@ using UnityEngine;
 public class KS_MakeBullet : MonoBehaviour
 {
     public Camera cameraToLookAt;
+    public Sprite[] letters;
+    private int index = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,12 +22,15 @@ public class KS_MakeBullet : MonoBehaviour
             GameObject bullet = KS_ObjectPooler.KS_SharedInstance.GetPooledObject();
             if (bullet != null)
             {
+                bullet.GetComponent<SpriteRenderer>().sprite = letters[index];
                 bullet.transform.position = this.transform.position;
                 bullet.transform.rotation = cameraToLookAt.transform.rotation;
                 KS_Bullet bul = bullet.GetComponent<KS_Bullet>();
                 bul.ResetStuff();
                 bullet.SetActive(true);
                 bul.StartKillTimer();
+                if (index == letters.Length - 1) index = 0;
+                else index++;
             }
         }
     }
