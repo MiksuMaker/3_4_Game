@@ -13,9 +13,12 @@ public class AskBox : MonoBehaviour
 
     [SerializeField] List<GameObject> questionButtons; //list of buttons
 
+    [SerializeField] GameObject counter;
+
     #region private variables 
     //Question lists
     List<(string, string)> questions = new List<(string, string)>(); //empty question list.
+    List<bool> isAsked = new List<bool>();
 
     List<(string, string)> questionsTaenia = new List<(string, string)>();
     List<(string,string)> questionsWillow = new List<(string, string)>();
@@ -23,11 +26,19 @@ public class AskBox : MonoBehaviour
     List<(string, string)> questionsFather = new List<(string, string)>();
     List<(string, string)> questionsDoge = new List<(string, string)>();
 
+    List<bool> isAskedTaenia = new List<bool>();
+    List<bool> isAskedWillow = new List<bool>();
+    List<bool> isAskedMortti = new List<bool>();
+    List<bool> isAskedFather = new List<bool>();
+    List<bool> isAskedDoge = new List<bool>();
+
     int qAmount; //how many buttons we have
     #endregion private variables
 
     private void OnEnable()
     {
+        counter = GameObject.Find("TextCounter");
+
         qAmount = questionButtons.Count;
 
         //Initialize questions if you haven't done that before.
@@ -39,20 +50,20 @@ public class AskBox : MonoBehaviour
         switch (GameManagerMK.charNow)
         {
             case GameManagerMK.Character.Taenia:
-                ChangeQuestions(questionsTaenia);
+                ChangeQuestions(questionsTaenia, isAskedTaenia);
                 break;
             case GameManagerMK.Character.Willow:
-                ChangeQuestions(questionsWillow);
+                ChangeQuestions(questionsWillow, isAskedWillow);
                 break;
             case GameManagerMK.Character.Mortti:
-                ChangeQuestions(questionsMortti);
+                ChangeQuestions(questionsMortti, isAskedMortti);
                 break;
             case GameManagerMK.Character.Father:
-                ChangeQuestions(questionsFather);
+                ChangeQuestions(questionsFather, isAskedFather);
                 break;
             case GameManagerMK.Character.Doge:
                 questionsDoge.Add(("Who is a good boi?","Woof!"));
-                ChangeQuestions(questionsDoge);
+                ChangeQuestions(questionsDoge, isAskedDoge);
                 break;
             default:
                 Debug.Log("There is no character like that.");
@@ -61,16 +72,22 @@ public class AskBox : MonoBehaviour
     }
 
 
-    void ChangeQuestions(List<(string, string)> que)
+    void ChangeQuestions(List<(string, string)> que, List<bool> isask)
     {
         //Change questions according to the character.
         Debug.Log(que.Count);
 
         questions.Clear();
+        isAsked.Clear();
 
         foreach ((string ,string) i in que)
         {
             questions.Add(i);
+        }
+
+        foreach(bool i in isask)
+        {
+            isAsked.Add(i);
         }
 
         qAmount = questions.Count;
@@ -81,14 +98,21 @@ public class AskBox : MonoBehaviour
             //Edit buttons.
             TextMeshProUGUI textbox = questionButtons[i].gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
 
+            //Print question
             if (qAmount > i)
             {
+                questionButtons[i].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
                 textbox.text = questions[i].Item1;
                 textbox.fontSize = qTextSize;
+
+                if (isAsked[i]) //If question has already been asked change the colour.
+                {
+                    questionButtons[i].GetComponent<Image>().color = new Color32(160, 160, 160, 255);
+                }
             }
             else
             {
-                questionButtons[i].gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "";
+                questionButtons[i].gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = ""; //Make question text zero.
             }
 
         } //Change buttons manually. Also change button settings if needed.
@@ -100,13 +124,16 @@ public class AskBox : MonoBehaviour
         {
             if (questions[button].Item1 != "") //print the answer and take one question out.
             {
-                questionButtons[button].GetComponent<Image>().color = new Color(99,99,99);
+                //Edit buttons.
+                questionButtons[button].GetComponent<Image>().color = new Color32(160, 160, 160, 255); //change colour.
+                GetIsListForChar()[button] = true;
+
+                //Edit answer box.
                 this.GetComponent<AnswerBox>().EditAnswer(questions[button].Item2);
+
+                //Edit amount of questions.
                 GameManagerMK.qLeft--;
-                if(GameManagerMK.qLeft < 1)
-                {
-                    GameManagerMK.OpenWill();
-                }
+                counter.GetComponent<TextMeshProUGUI>().text = GameManagerMK.qLeft + " QUESTIONS LEFT";
             }
             else
             {
@@ -117,12 +144,10 @@ public class AskBox : MonoBehaviour
         {
             Debug.Log("There is no button " + button);
         }
-    }
+    } //Ask a question.
 
     private void initializeQuestions()
     {
-
- 
         //Taenia questions
         questionsTaenia.Add(("What would you like to inherit?", "It pains me to think about your will when you're about to die... But yea, I would like to have your fortune."));
         questionsTaenia.Add(("What are your future plans?", "I think I'll keep playing games. I have became pretty good with online poker, believe or not."));
@@ -159,6 +184,37 @@ public class AskBox : MonoBehaviour
         questionsFather.Add(("Do you remember Mortti?", "Mortti was like a son to me, I wish he had visited us more often. But oh, that boy was bad with money. He tended to spend his weekly allowance on the first scam he encountered."));
         questionsFather.Add(("Are you sad about my death?", "Kind of. I can't really keep writing my weekly column \"Son I Never Wanted\" if you are dead."));
         //Father questions
+
+        for(int i = 0; i < questionButtons.Count; i++)
+        {
+            isAskedTaenia.Add(false);
+            isAskedWillow.Add(false);
+            isAskedFather.Add(false);
+            isAskedMortti.Add(false);
+            isAskedDoge.Add(false);
+        }
         
+    }
+
+
+    private List<bool> GetIsListForChar()
+    {
+        switch (GameManagerMK.charNow)
+        {
+            case GameManagerMK.Character.Taenia:
+                return isAskedTaenia;
+            case GameManagerMK.Character.Willow:
+                return isAskedWillow;
+            case GameManagerMK.Character.Mortti:
+                return isAskedMortti;
+            case GameManagerMK.Character.Father:
+                return isAskedFather;
+            case GameManagerMK.Character.Doge:
+                return isAskedDoge;
+            default:
+                Debug.Log("There is no character like that.");
+                break;
+        }
+        return null;
     }
 }

@@ -1215,7 +1215,7 @@ GameObject:
   - component: {fileID: 290973064}
   - component: {fileID: 290973063}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: TextCounter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1261,7 +1261,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0 QUESTIONS LEFT
+  m_text: 10 QUESTIONS LEFT
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c70b39696af933e4ab18f0fd6dd2a2fa, type: 2}
   m_sharedMaterial: {fileID: 5421972470874888884, guid: c70b39696af933e4ab18f0fd6dd2a2fa, type: 2}
@@ -1783,6 +1783,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   conversation: {fileID: 430616011}
+  will: {fileID: 55093084}
 --- !u!1 &649503495
 GameObject:
   m_ObjectHideFlags: 0
@@ -4413,15 +4414,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2712367910598251705, guid: 27dc4ab623d2c794d8a6a993e85ce572, type: 3}
       propertyPath: m_Color.b
-      value: 0.38679248
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2712367910598251705, guid: 27dc4ab623d2c794d8a6a993e85ce572, type: 3}
       propertyPath: m_Color.g
-      value: 0.38679248
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2712367910598251705, guid: 27dc4ab623d2c794d8a6a993e85ce572, type: 3}
       propertyPath: m_Color.r
-      value: 0.38679248
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2712367910699008827, guid: 27dc4ab623d2c794d8a6a993e85ce572, type: 3}
       propertyPath: m_hasFontAssetChanged

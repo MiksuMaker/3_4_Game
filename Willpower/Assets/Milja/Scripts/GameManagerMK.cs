@@ -10,7 +10,7 @@ public class GameManagerMK : MonoBehaviour
     public static int qLeft = 10;
 
     [SerializeField] GameObject conversation;
-
+    [SerializeField] GameObject will;
 
     #region Open/close conversation
     public void openConversation()
@@ -20,15 +20,24 @@ public class GameManagerMK : MonoBehaviour
 
     public void closeConversation()
     {
-        GameObject conversation = GameObject.Find("Conversation");
         conversation.SetActive(false);
     }
 
     #endregion
 
-
-    public static void OpenWill()
+    public void Update()
     {
+        if(qLeft < 1)
+        {
+            OpenWill();
+        }
+    }
+
+    public void OpenWill()
+    {
+
+        closeConversation();
+        will.SetActive(true);
 
     }
 }
