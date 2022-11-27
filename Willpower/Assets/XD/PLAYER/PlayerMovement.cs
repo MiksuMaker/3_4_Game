@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
 
 
     public bool CanMove = false;
+    public bool CanShoot = false;
 
     [Header("Movement")]
     public float movementSpeed;

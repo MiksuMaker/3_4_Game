@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class WizardBehaviour : MonoBehaviour
 {
+    [SerializeField] WizardSpawner wizspa;
     [SerializeField] Transform spawnLocation;
     [SerializeField] GameObject playerObj;
     [SerializeField] ConvertoTo2D ConvertoTo2D;
@@ -17,6 +18,7 @@ public class WizardBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        wizspa = FindObjectOfType<WizardSpawner>();
         ConvertoTo2D = GetComponent<ConvertoTo2D>();
         step = speed * Time.deltaTime;
         newLocation = spawnLocation.position;
@@ -39,6 +41,7 @@ public class WizardBehaviour : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        wizspa.wizCur--;
         if (collision.gameObject.CompareTag("Bullet")) ConvertoTo2D.ConvertTo2DSprite();
         Destroy(this);
     }

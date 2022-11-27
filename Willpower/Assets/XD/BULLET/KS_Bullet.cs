@@ -49,7 +49,7 @@ public class KS_Bullet : MonoBehaviour
 
     IEnumerator killMePlz()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(3);
         gameObject.SetActive(false);
     }
 

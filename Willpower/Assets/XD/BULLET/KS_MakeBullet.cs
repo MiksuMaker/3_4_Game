@@ -8,6 +8,8 @@ public class KS_MakeBullet : MonoBehaviour
     public Sprite[] letters;
     private int index = 0;
 
+    [SerializeField] PlayerMovement player;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,7 +19,7 @@ public class KS_MakeBullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && player.CanShoot)
         {
             GameObject bullet = KS_ObjectPooler.KS_SharedInstance.GetPooledObject();
             if (bullet != null)

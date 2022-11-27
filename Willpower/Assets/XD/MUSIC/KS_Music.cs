@@ -13,7 +13,7 @@ public class KS_Music : MonoBehaviour
 
     void Start()
     {
-        musicPlay(mu_start);
+        musicPlay(mu_mid);
         musicPlayer.Play();
     }
 

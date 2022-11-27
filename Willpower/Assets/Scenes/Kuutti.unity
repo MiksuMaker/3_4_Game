@@ -3106,6 +3106,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 4470336189ff73b4e85fc3cefe53c091, type: 3}
   - {fileID: 21300000, guid: 404bd94dd6528204698de35bd06636b9, type: 3}
   - {fileID: 21300000, guid: 46d4f060bce79c545a84b00c1441053a, type: 3}
+  player: {fileID: 1408542135}
 --- !u!82 &1408542133
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3229,6 +3230,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanMove: 0
+  CanShoot: 0
   movementSpeed: 7
   groundDrag: 5
   jumpForce: 8
@@ -5006,6 +5008,7 @@ MonoBehaviour:
   - {fileID: 1071589631645573420}
   - {fileID: 1071589632481653301}
   - {fileID: 1071589632173744510}
+  wizCur: 0
 --- !u!4 &1071589631197119075
 Transform:
   m_ObjectHideFlags: 0
@@ -6982,24 +6985,28 @@ MonoBehaviour:
     sentences:
     - In the beginning
     - There was Will
-    - Will wanted to be a real 3D object!
+    - Will was meant to be a real 3D object!
     - But little did Will know...
   cut_middle:
-    name: Will
+    name: 
     sentences:
     - Now I understand...
     - Said Will
-    - And used his Power to become...
+    - And used his Power to become a real
+    - two dimensional....
     - STOP RIGHT THERE!1!
     - "IT'S THE X-DIMENSION WIZARD G\xC4NG"
-    - XD
+    - XD WIZARDS!!!
   cut_end:
     name: 
     sentences:
     - "And so WILL taught the wizard g\xE4ng an important and very meaningful lesson
       about life"
+    - And became a 2D sprite
     - "the wizard g\xE4ng granted WILL the power of telekinesis"
     - and birthed him onto an office desk after 107 years of juridical paperwork
+    - Withe the power of Will
+  wizSpa: {fileID: 1071589631197119074}
 --- !u!224 &4800926453087704005
 RectTransform:
   m_ObjectHideFlags: 0

@@ -25,6 +25,8 @@ public class KS_CutsceneHandler : MonoBehaviour
 
     [SerializeField] private KS_Dialogue cut_end;
 
+    [SerializeField] private WizardSpawner wizSpa;
+
 
     private void Start()
     {
@@ -61,17 +63,53 @@ public class KS_CutsceneHandler : MonoBehaviour
             case "MID":
                 switch(phase_alt)
                 {
-                    case 0: wait(1); phase_alt++; break;
-                    case 1: dialMana.StartDialogue(cut_middle); phase_alt++; break;
-                    case 3: dialMana.name = ""; phase_alt++;break;
-                    case 5: dialMana.name = "wizard gäng";musicPlayer.musicStop();phase_alt++;break;
-                    case 9: musicPlayer.musicPlay(musicPlayer.mu_end);phase_alt++;break;    
+
+                    case 0: wait(1); phase_alt++; player.CanMove = false; break;
+                    case 1: startBgAnimator.SetBool("FADEOUT", false); phase_alt++;break;
+                    case 2: dialMana.StartDialogue(cut_middle); phase_alt++; break;
+                    case 5: dialMana.name = ""; phase_alt++;break;
+                    case 7: dialMana.name = "wizard gäng";musicPlayer.musicStop();phase_alt++;
+
+                        player.gameObject.transform.position = wizSpa.gameObject.transform.position;
+                        break;
+                    case 11: musicPlayer.musicPlay(musicPlayer.mu_end);phase_alt++;break;
+                    case 12: startBgAnimator.SetBool("XDIMENSIO", true);
+                        player.CanMove = true;StartCoroutine(wizSpa.SpawnWizards()); player.CanShoot = true; phase_alt++;
+                        break;
+                    case 14:
+                        phase_alt = 0;
+                        phase = "END";
                         break;
                     default: if (click()) { dial_c(); phase_alt++; }; break;
 
                 }
 
             break;
+
+
+
+
+            case "END":
+                switch (phase_alt)
+                {
+                    case 0: 
+                        if (wizSpa.areAllWizardsLikePwnedOrSomething()){
+                            wait(5); phase_alt++;
+                        }
+                        break;
+                    case 1:
+                        startBgAnimator.SetBool("XDIMENSIO", false);
+                        startBgAnimator.SetBool("XDIMENSIO", false);
+                        phase_alt++;
+                        wait(1);
+                        break;
+                    case 2:
+                        dialMana.StartDialogue(cut_middle); phase_alt++; 
+                        break;
+
+
+                } 
+                break;
 
 
         }
