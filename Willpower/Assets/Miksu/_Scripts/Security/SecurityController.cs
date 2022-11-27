@@ -6,6 +6,33 @@ public class SecurityController : Draggable
 {
     #region PROPERTIES
 
+    #region AI Properties
+    GameObject currentTarget;
+    GameObject player;
+
+    [Header("Moving")]
+    [SerializeField]
+    float moveSpeed = 5f;
+    [SerializeField]
+    float maxVelocity = 10f;
+
+    public enum aiMode
+    {
+        chase, goToDoor, idle, struggle, stunned
+    }
+    public aiMode currentMode = aiMode.chase;
+
+    private enum Orientation
+    {
+        left, right
+    }
+    //Orientation 
+    Orientation currentOrientation = Orientation.left;
+    float orientation = 1f;
+
+    float yAxisTreshold = 1f;
+    #endregion
+
 
     GameObject graphics;
 
@@ -14,7 +41,6 @@ public class SecurityController : Draggable
         idle, run, hover, hurt
     }
     AnimationState currentState = AnimationState.idle;
-    float orientation = 1f;
     #endregion
 
     #region BUILTIN
@@ -26,6 +52,8 @@ public class SecurityController : Draggable
         graphics = animator.gameObject;
 
         Debug.Log("Animator: " + animator.runtimeAnimatorController.name);
+
+        AI_Start();
     }
 
 
@@ -52,6 +80,9 @@ public class SecurityController : Draggable
             }
         }
         #endregion
+
+        // AI Update
+        AI_Update();
     }
     #endregion
 
@@ -72,11 +103,45 @@ public class SecurityController : Draggable
         }
     }
 
+    protected override IEnumerator FlyTimer()
+    {
+        while (true)
+        {
+            if (gameObject.layer == LayerMask.NameToLayer("Flying"))
+            {
+
+
+                // Keep the Layer on Flying as long as the timer hasn't run out
+
+                while (flyTime > 0)
+                {
+                    flyTime -= Time.deltaTime;
+
+                    // UI
+                    Highlight();
+
+                    yield return new WaitForFixedUpdate();
+                }
+
+                // Change the Layer back to Draggable
+                ChangeLayer(Layer.idle);
+
+                // Change the AI Mode to chase
+                currentMode = aiMode.chase;
+            }
+
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
     protected override void Highlight()
     {
         if (animator != null)
         {
             PlayAnimation(AnimationState.hover);
+
+            // Change AI State
+            currentMode = aiMode.struggle;
         }
     }
 
@@ -97,7 +162,7 @@ public class SecurityController : Draggable
 
     protected override void BeDestroyed()
     {
-        PlayAnimation(AnimationState.hurt);
+        currentMode = aiMode.stunned;
     }
     #endregion
 
@@ -150,7 +215,8 @@ public class SecurityController : Draggable
 
     private void CheckOrientation()
     {
-        // 'Orientation' variable is modified in CheckMoveHorizontal()
+        if (currentOrientation == Orientation.left)
+        { orientation = 1f; } else { orientation = -1f; }
 
         // LEFT: +1,    RIGHT: -1
         Vector3 scale = new Vector3(orientation, 1f, 1f);
@@ -158,5 +224,140 @@ public class SecurityController : Draggable
         // Set scale
         graphics.transform.localScale = scale;
     }
+    #endregion
+
+    #region AI
+    private void AI_Start()
+    {
+        // Find Player
+        player = FindObjectOfType<ProtagController>().gameObject;
+        currentTarget = player;
+    }
+
+    private void AI_Update()
+    {
+        CheckTargeting();
+    }
+
+    private void CheckTargeting()
+    {
+        switch (currentMode)
+        {
+            case aiMode.idle:
+
+                break;
+
+            // ========================
+
+            case aiMode.chase:
+
+                // Animation
+                PlayAnimation(AnimationState.run);
+
+                CheckPlayerPos();
+                MoveTowardsTarget();
+
+                break;
+
+            // ========================
+
+            case aiMode.goToDoor:
+
+                break;
+
+            // ========================
+
+            case aiMode.stunned:
+
+                // Animation
+                PlayAnimation(AnimationState.hurt);
+
+                break;
+
+            // ========================
+
+            default:
+                break;
+        }
+    }
+
+    private void CheckPlayerPos()
+    {
+        // Check Player Y-coordinate
+
+        //if (player.transform.position.y > (transform.position.y + yAxisTreshold))
+        //{
+        //    // If Player is too high, go to nearest door
+        //    //currentMode = aiMode.goToDoor;
+        //}
+        //else
+        {
+            // Keep chasing, check X-coord
+            if (currentOrientation == Orientation.left)
+            {
+                // Check need to TURN to RIGHT
+                if (player.transform.position.x > transform.position.x)
+                {
+                    // Turn
+                    TurnAfterDelay(Orientation.right);
+                }
+            }
+            else
+            {
+                // Check the need to TURN to LEFT
+                if (player.transform.position.x < transform.position.x)
+                {
+                    // Turn
+                    TurnAfterDelay(Orientation.left);
+                }
+            }
+        }
+    }
+
+    #region Turning
+    private void TurnAfterDelay(Orientation direction)
+    {
+        //Debug.Log("Turning to: " + direction);
+
+        float time = Random.Range(0.1f, 0.5f);
+
+        StartCoroutine(TimedTurn(direction, time));
+    }
+
+    IEnumerator TimedTurn(Orientation direction, float delay)
+    {
+        WaitForSeconds wait = new WaitForSeconds(delay);
+
+        yield return wait;
+
+        // Execute Turn
+        currentOrientation = direction;
+        CheckOrientation();
+    }
+    #endregion
+
+    #region MOVING
+    private void MoveTowardsTarget()
+    {
+        // Move forwards
+        Vector2 forwards;
+        if (currentOrientation == Orientation.left)
+        {
+            forwards = new Vector2(-1f, 0f);    // Left
+        }
+        else
+        {
+            forwards = new Vector2(1f, 0f);     // Right
+        }
+
+        // Move
+        rb.AddForce(forwards * moveSpeed * Time.deltaTime, ForceMode2D.Impulse);
+
+        // Limit velocity on X-axis
+        rb.velocity = new Vector2(Mathf.Min(rb.velocity.x, maxVelocity), rb.velocity.y);
+
+    }
+    #endregion
+
     #endregion
 }

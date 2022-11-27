@@ -30,7 +30,7 @@ public class Draggable : MonoBehaviour
         idle, flying
     }
     public Layer currentLayer = Layer.idle;
-    private float flyTime;
+    protected float flyTime;
 
 
     public Rigidbody2D rb;
@@ -202,7 +202,7 @@ public class Draggable : MonoBehaviour
         }
     }
 
-    IEnumerator FlyTimer()
+    protected virtual IEnumerator FlyTimer()
     {
         while (true)
         {

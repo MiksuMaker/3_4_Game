@@ -91,6 +91,14 @@ public class ProtagController : MonoBehaviour
 
             // ======================
 
+            case GameMode.hurt:
+
+                // Restart game?
+
+                break;
+
+            // ======================
+
             default:
                 // No game mode
                 break;
@@ -241,6 +249,7 @@ public class ProtagController : MonoBehaviour
     {
         currentAnimation = state;
 
+
         // Check correct orientation
         CheckOrientation();
 
@@ -271,6 +280,7 @@ public class ProtagController : MonoBehaviour
             // =========================
 
             case AnimationState.hurt:
+                Debug.Log("Animation: " + state);
 
                 animator.Play("Protag_Hurt");
 
@@ -294,4 +304,17 @@ public class ProtagController : MonoBehaviour
         graphics.transform.localScale = scale;
     }
     #endregion
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // Check if Guard
+        if (collision.gameObject.layer == LayerMask.NameToLayer("DraggableCharacter"))
+        {
+            if (collision.gameObject.GetComponent<SecurityController>().currentMode != SecurityController.aiMode.stunned)
+            {
+                currentMode = GameMode.hurt;
+                PlayAnimation(AnimationState.hurt);
+            }
+        }
+    }
 }
