@@ -107,7 +107,7 @@ public class EndS : MonoBehaviour
         switch (WillScript.whoGetsDog)
         {
             case "Taenia":
-                textSays.text = "Only reason why the wife had endured the dog all these years was her husband. Poor dog…";
+                textSays.text = "Only reason why Taenia had endured the dog all these years was her husband. Poor dog…";
                 pic.sprite = FindSpriteWithName("4-1");
                 break;
             case "Willow":

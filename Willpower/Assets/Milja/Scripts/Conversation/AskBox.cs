@@ -62,7 +62,6 @@ public class AskBox : MonoBehaviour
                 ChangeQuestions(questionsFather, isAskedFather);
                 break;
             case GameManagerMK.Character.Doge:
-                questionsDoge.Add(("Who is a good boi?","Woof!"));
                 ChangeQuestions(questionsDoge, isAskedDoge);
                 break;
             default:
@@ -177,6 +176,7 @@ public class AskBox : MonoBehaviour
         questionsMortti.Add(("What do you think about my company?", "Your company? Isn't it a IT company? I know something about computers but not that much."));
         questionsMortti.Add(("Are you sad about my death?", "Of course I am. I am your best buddy."));
 
+        //Father questions
         questionsFather.Add(("What are you doing here?", "Just give me your company, you know your good-for-nothing daughter or devious wife deserve nothing."));
         questionsFather.Add(("Don't you have anything else to do?", "I would love to be in my cottage reading books and listening to birds, so yes I have. But someone has to be here knocking some sense into you."));
         questionsFather.Add(("Do you remember the day I was born?", "I always wanted to have a 3D-child, but no. I got a two dimensional wimp."));
@@ -184,9 +184,15 @@ public class AskBox : MonoBehaviour
         questionsFather.Add(("What do you think about Willow?", "That brat is nowhere as ugly as you were as a child, but I hope she never tries to touch me again."));
         questionsFather.Add(("Do you remember Mortti?", "Mortti was like a son to me, I wish he had visited us more often. But oh, that boy was bad with money. He tended to spend his weekly allowance on the first scam he encountered."));
         questionsFather.Add(("Are you sad about my death?", "Kind of. I can't really keep writing my weekly column \"Son I Never Wanted\" if you are dead."));
-        //Father questions
 
-        for(int i = 0; i < questionButtons.Count; i++)
+        //Doge questions
+        questionsDoge.Add(("Who is a good boi?", "Woof!"));
+        questionsDoge.Add(("What do you think about Taenia?", "Growl..."));
+        questionsDoge.Add(("What do you think about Willow?", "I am very fond of the young lady Willow."));
+        questionsDoge.Add(("What do you think about Mortti?", "Arf?"));
+        questionsDoge.Add(("What do you think about Father?", "Woof woof woof!"));
+
+        for (int i = 0; i < questionButtons.Count; i++)
         {
             isAskedTaenia.Add(false);
             isAskedWillow.Add(false);
