@@ -5,8 +5,8 @@ using UnityEngine;
 public class Draggable : MonoBehaviour
 {
     #region PROPERTIES
-    Dragger dragger;
-    Animator animator;
+    protected Dragger dragger;
+    protected Animator animator;
 
 
 
@@ -14,15 +14,15 @@ public class Draggable : MonoBehaviour
     [SerializeField]
     float velocityHurtLimit = 5f;
     [SerializeField]
-    float MAXhealth = 10;
+    protected float MAXhealth = 10;
     [SerializeField]
-    float health;
+    protected float health;
 
     [Header("Physics")]
     [SerializeField]
     float mass = 1f;
     [SerializeField]
-    float velocityLimit = 5f;
+    protected float velocityLimit = 5f;
     Vector2 currentVelocity;
 
     public enum Layer
@@ -46,7 +46,7 @@ public class Draggable : MonoBehaviour
     #endregion
 
     #region BUILTIN
-    private void Start()
+    protected void Start()
     {
         // Try to find Dragger
         dragger = FindObjectOfType<Dragger>();
@@ -66,7 +66,7 @@ public class Draggable : MonoBehaviour
 
     }
 
-    private void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         // Limit the MAX Velocity
         //if (rb.velocity.magnitude > velocityLimit)
@@ -102,7 +102,7 @@ public class Draggable : MonoBehaviour
         beingDragged = isBeingDragged;
     }
 
-    public void InitializeDrag()
+    public virtual void InitializeDrag()
     {
         ChangeLayer(Layer.flying);
     }
@@ -157,7 +157,7 @@ public class Draggable : MonoBehaviour
     #endregion
 
     #region ANIMATIONS
-    private void Highlight()
+    protected virtual void Highlight()
     {
         if (animator != null)
         {
@@ -175,14 +175,18 @@ public class Draggable : MonoBehaviour
         if (rb.velocity.magnitude >= velocityHurtLimit)
         {
             // Try to damage the other object
-
+            Draggable obj;
+            if (collision.gameObject.TryGetComponent<Draggable>(out obj))
+            {
+                obj.TakeDamage(rb.velocity.magnitude);
+            }
 
             // Damage yourself too
             TakeDamage(rb.velocity.magnitude);
         }
     }
 
-    private void ChangeLayer(Layer layer)
+    protected virtual void ChangeLayer(Layer layer)
     {
         switch (layer)
         {
@@ -229,9 +233,9 @@ public class Draggable : MonoBehaviour
 
 
     #region DAMAGE
-    private void TakeDamage(float amount)
+    protected virtual void TakeDamage(float amount)
     {
-        Debug.Log("Damage taken: " + amount);
+        //Debug.Log("Damage taken: " + amount);
 
         // Take damage
         health -= amount;
@@ -243,7 +247,7 @@ public class Draggable : MonoBehaviour
         }
     }
 
-    private void BeDestroyed()
+    protected virtual void BeDestroyed()
     {
         // Play animation
 

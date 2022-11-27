@@ -143,4 +143,19 @@ public class Dragger : MonoBehaviour
             draggable.rb.AddTorque(Random.Range(-5f, 5f), ForceMode2D.Impulse);
         }
     }
+
+    public void UndragMe(Draggable draggable)
+    {
+        // Remove from list
+        objectsInPull.Remove(draggable);
+
+        //foreach (Draggable obj in objectsInPull)
+        //{
+        //    if (obj == draggable)
+        //    {
+        //        // Remove from list
+        //        break;
+        //    }
+        //}
+    }
 }
