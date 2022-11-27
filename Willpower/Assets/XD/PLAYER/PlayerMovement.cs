@@ -6,6 +6,10 @@ public class PlayerMovement : MonoBehaviour
 {
 
 
+
+
+
+
     public bool CanMove = false;
 
     [Header("Movement")]
@@ -124,4 +128,10 @@ public class PlayerMovement : MonoBehaviour
     {
         readyToJump = true;
     }
+
+
+
+
+ 
+
 }

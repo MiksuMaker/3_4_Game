@@ -9,19 +9,32 @@ public class KS_DialogueTrigger : MonoBehaviour
     private KS_DialogueManager dialMana;
 
 
+
+    bool talked = false;
+
     private void Awake()
     {
+
         dialMana = FindObjectOfType<KS_DialogueManager>();
+
+        //_id = dialMana.talked_list.size
+
     }
 
 
     public void TriggerDialogue()
     {
+        talked = true;
         dialMana.StartDialogue(dial);
     }
 
     public void ContinueDialogue()
     {
         dialMana.DisplayNextSentence();
+    }
+
+    public bool getTalked()
+    {
+        return talked;
     }
 }

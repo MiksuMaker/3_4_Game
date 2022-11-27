@@ -31,4 +31,9 @@ public class KS_Music : MonoBehaviour
         musicPlayer.clip = musicClip;
         musicPlayer.Play();
     }
+
+    public void musicStop()
+    {
+        musicPlayer.Stop();
+    }
 }

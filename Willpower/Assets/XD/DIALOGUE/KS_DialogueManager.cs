@@ -7,10 +7,18 @@ using TMPro;
 public class KS_DialogueManager : MonoBehaviour
 {
 
+    KS_CutsceneHandler cutsceneHandler;
+
     public TextMeshProUGUI nametext;
     public TextMeshProUGUI dialogueText;
 
     private KS_DialogueActivator dialAct;
+
+    bool finished = false;
+
+
+    public KS_DialogueTrigger[] talked_list;
+
 
 
     [SerializeField] private AudioSource audioSource;
@@ -24,6 +32,12 @@ public class KS_DialogueManager : MonoBehaviour
     {
         dialAct = FindObjectOfType<KS_DialogueActivator>();
         sentences = new Queue<string>();
+
+        talked_list = FindObjectsOfType<KS_DialogueTrigger>();
+
+        cutsceneHandler = FindObjectOfType<KS_CutsceneHandler>();
+        
+
     }
 
     public void StartDialogue(KS_Dialogue _dial)
@@ -88,6 +102,32 @@ public class KS_DialogueManager : MonoBehaviour
         StopAllCoroutines();
         animator.SetBool("IsOpen", false);
         dialAct.isTalking = false;
+
+        if (!finished)
+        {
+            if (checkTalkedList()){
+                dialAct.setCantalk(false);
+                cutsceneHandler.setPhase("MID");
+            }
+        }
     }
 
+
+
+    public bool checkTalkedList()
+    {
+        foreach (KS_DialogueTrigger _d in talked_list)
+        {
+            if (!_d.getTalked()) { return false; }
+        }
+        finished = true;
+        return true;
+    }
+
+
+
+    public bool getFinished()
+    {
+        return finished;
+    }
 }
