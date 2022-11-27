@@ -484,7 +484,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 618097ea05364c543a2a5140dff61879, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 28c5fb2e96c3a38469d3809292c5adc4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1482,7 +1482,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 671533512}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 24.59, y: 9.96, z: 30.26}
+  m_LocalPosition: {x: 42.67, y: 0.89, z: 30.26}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3053,6 +3053,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nametext: {fileID: 4800926452478985505}
   dialogueText: {fileID: 4800926452945039657}
+  talked_list: []
   audioSource: {fileID: 1408542133}
   au1: {fileID: 8300000, guid: 2bf17362a6d286445a3a4d2d67cee55e, type: 3}
   animator: {fileID: 4800926453461792076}
@@ -3217,7 +3218,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 0.359
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
