@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class KS_CutsceneHandler : MonoBehaviour
 {
@@ -164,6 +165,10 @@ public class KS_CutsceneHandler : MonoBehaviour
 
                         endSprite.SetActive(true);
                         break;
+                    case 11:
+                        SceneManager.LoadScene("Menu");
+                        break;
+
 
                     default: if (click()) { dial_c(); phase_alt++; }; break;
 
