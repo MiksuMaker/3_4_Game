@@ -66,9 +66,24 @@ public class KS_CutsceneHandler : MonoBehaviour
                     case 3: if (click()) { willAnimator.SetBool("isAnim",true); phase_alt++; wait(2); } ;break;
                     case 4: { dial_c(); phase_alt++; }; break;
                     case 6: if (click()) { willAnimator.SetBool("isAnim", false); dialMana.EndDialogue() ; wait(2); phase_alt++; }; break;
-                    case 7: startBgAnimator.SetBool("FADEOUT", true);phase_alt++; player.CanMove = true;phase_alt = 0;phase = "MID_WAIT";
-                        tutoAnima.SetTrigger("KS_TutoAnima");
+                    case 7: startBgAnimator.SetBool("FADEOUT", true);phase_alt++; player.CanMove = true;
+                        
+                        wait(2);
+                        
                         break;
+
+                    case 8:
+
+                        phase_alt++;
+                        tutoAnima.SetBool("BEGUB", true);
+                        wait(1);
+                        break;
+                    case 9:
+                        tutoAnima.SetBool("BEGUB", false);
+                        phase = "MID_WAIT";
+                        phase_alt = 0;
+                        break;
+
 
 
 
