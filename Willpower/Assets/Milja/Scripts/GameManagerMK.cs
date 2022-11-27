@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameManagerMK : MonoBehaviour
 {
@@ -29,7 +30,10 @@ public class GameManagerMK : MonoBehaviour
     {
         if(qLeft < 1)
         {
+            GameObject.Find("Room").SetActive(false);
             OpenWill();
+            qLeft = 100;
+            GameObject.Find("TextCounter").GetComponent<TextMeshProUGUI>().text = "";
         }
     }
 

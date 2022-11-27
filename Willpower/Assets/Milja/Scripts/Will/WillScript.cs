@@ -8,12 +8,14 @@ public class WillScript : MonoBehaviour
     // Start is called before the first frame update
     private string lastPressed;
 
-    public static string whoGetsHouse;
-    public static string whoGetsMoney;
-    public static string  whoGetsCompany;
-    public static string whoGetsDog;
+    public static string whoGetsHouse = "";
+    public static string whoGetsMoney = "";
+    public static string  whoGetsCompany = "";
+    public static string whoGetsDog = "";
 
     [SerializeField] GameObject charMenu;
+    [SerializeField] GameObject sign;
+    [SerializeField] GameObject end;
 
     #region Choicebox opening
     public void TakePlace(GameObject button)
@@ -30,7 +32,7 @@ public class WillScript : MonoBehaviour
 
     public void ChooseWho(string who)
     {
-        switch (lastPressed){
+        switch (lastPressed){ 
             case "House":
                 whoGetsHouse = who;
                 break;
@@ -50,5 +52,22 @@ public class WillScript : MonoBehaviour
 
         GameObject.Find(lastPressed).transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = who;
         charMenu.SetActive(false);
+    } //Choose who is the inheritor.
+
+    public void Sign()
+    {
+        if(whoGetsMoney != "" && whoGetsCompany != "" && whoGetsDog != "" && whoGetsHouse != "")
+        {
+            sign.SetActive(true);
+            StartCoroutine(WaitAfterSign());
+        }
+
+    }
+
+    IEnumerator WaitAfterSign()
+    {
+        yield return new WaitForSeconds(2f);
+        end.SetActive(true);
+        gameObject.SetActive(false);
     }
 }
