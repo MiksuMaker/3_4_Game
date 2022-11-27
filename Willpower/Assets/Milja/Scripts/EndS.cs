@@ -12,7 +12,7 @@ public class EndS : MonoBehaviour
 
     Object[] backs;
 
-    float waitTime = 5f;
+    float waitTime = 7f;
 
     private void OnEnable()
     {
@@ -123,7 +123,7 @@ public class EndS : MonoBehaviour
                 pic.sprite = FindSpriteWithName("4-4");
                 break;
             case "Doge":
-                textSays.text = "The dog was perfectly capable of taking care of himself. Now he was free, ready to fulfill all his dreams.";
+                textSays.text = "Doge was perfectly capable of taking care of himself. Now he was free, ready to fulfill all his dreams.";
                 pic.sprite = FindSpriteWithName("4-5");
                 break;
         }
