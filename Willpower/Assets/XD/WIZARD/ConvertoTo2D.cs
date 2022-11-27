@@ -32,6 +32,7 @@ public class ConvertoTo2D : MonoBehaviour
 
     IEnumerator KillWizard()
     {
+        wizardAnimator.SetBool("Spin", true);
         yield return new WaitForSeconds(2f);
         wizardAnimator.SetBool("Kill", true);
         yield return new WaitForSeconds(2f);

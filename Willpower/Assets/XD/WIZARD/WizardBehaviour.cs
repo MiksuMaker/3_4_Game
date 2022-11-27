@@ -29,17 +29,17 @@ public class WizardBehaviour : MonoBehaviour
 
         transform.position = Vector3.MoveTowards(transform.position, newLocation, step);
 
-        if (Vector3.Distance(transform.position, newLocation) < 0.5f) NewRandomMovementDirection();
+        if (Vector3.Distance(transform.position, newLocation) < 0.5f) NewRandomLocation();
     }
 
-    private void NewRandomMovementDirection()
+    private void NewRandomLocation()
     {
         newLocation = new Vector3(Random.Range(-5.0f, 5.0f)+spawnLocation.position.x, Random.Range(-2.0f, 2.0f)+spawnLocation.position.y, Random.Range(-5.0f, 5.0f)+spawnLocation.position.z);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision.gameObject.tag);
         if (collision.gameObject.CompareTag("Bullet")) ConvertoTo2D.ConvertTo2DSprite();
+        Destroy(this);
     }
 }

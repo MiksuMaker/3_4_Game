@@ -18,7 +18,6 @@ GameObject:
   - component: {fileID: 4420894722894737787}
   - component: {fileID: 7235728706484460789}
   - component: {fileID: 7405694778713957958}
-  - component: {fileID: 7794293557808412922}
   m_Layer: 0
   m_Name: Wizard
   m_TagString: Untagged
@@ -949,22 +948,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.7036533, y: 3.1201534, z: 1.3686218}
   m_Center: {x: 0.036024094, y: 0.1950562, z: 0.045375466}
---- !u!54 &7794293557808412922
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6426237216467134251}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 1
-  m_Constraints: 112
-  m_CollisionDetection: 1
 --- !u!1 &7021919770652964090
 GameObject:
   m_ObjectHideFlags: 0
@@ -975,6 +958,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3664816557358127144}
   - component: {fileID: 2379316615662875000}
+  - component: {fileID: 8538987243236542768}
   m_Layer: 0
   m_Name: 2D_Wizard
   m_TagString: Untagged
@@ -1049,3 +1033,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &8538987243236542768
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7021919770652964090}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6eaba47164937194390225aeb18aa42c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
