@@ -9,6 +9,12 @@ public class MainMenuScript : MonoBehaviour
 
     public static bool playAll = false;
 
+    public void Start()
+    {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+
     public void PlayAll()
     {
         playAll = true;
