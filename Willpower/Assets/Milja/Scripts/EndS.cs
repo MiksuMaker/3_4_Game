@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class EndS : MonoBehaviour
 {
@@ -130,7 +131,7 @@ public class EndS : MonoBehaviour
 
         yield return new WaitForSeconds(waitTime);
 
-
+        SceneManager.LoadScene("Menu", LoadSceneMode.Single);
     }
 
     Sprite FindSpriteWithName(string name)

@@ -5,7 +5,7 @@ using UnityEngine;
 public class UIscript : MonoBehaviour
 {
     // Start is called before the first frame update
-    [SerializeField] GameObject items, help;
+    [SerializeField] GameObject items, help, conversation;
 
     public void Update()
     {
@@ -13,6 +13,7 @@ public class UIscript : MonoBehaviour
         {
             items.SetActive(true);
             help.SetActive(false);
+            conversation.SetActive(false);
         }
     }
 

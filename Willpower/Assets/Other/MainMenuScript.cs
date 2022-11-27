@@ -12,11 +12,12 @@ public class MainMenuScript : MonoBehaviour
     public void PlayAll()
     {
         playAll = true;
+        SceneManager.LoadScene("Kuutti", LoadSceneMode.Single);
     }
 
     public void PlayKS()
     {
-
+        SceneManager.LoadScene("Kuutti", LoadSceneMode.Single);
     }
 
     public void PlayMiksu()

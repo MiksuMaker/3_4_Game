@@ -3688,6 +3688,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   items: {fileID: 1759647580}
   help: {fileID: 321474375}
+  conversation: {fileID: 430616011}
 --- !u!1 &1357038166
 GameObject:
   m_ObjectHideFlags: 0
