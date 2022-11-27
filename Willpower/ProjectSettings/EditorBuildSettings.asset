@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Milja.unity
     guid: f7bad19e0dab7d14a9ac50b0c45045bc
+  - enabled: 1
+    path: Assets/Scenes/Kuutti.unity
+    guid: f5681b513c106e9498a32bb284e19042
   m_configObjects: {}
