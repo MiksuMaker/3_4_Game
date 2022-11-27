@@ -113,6 +113,7 @@ public class AskBox : MonoBehaviour
             else
             {
                 questionButtons[i].gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = ""; //Make question text zero.
+                questionButtons[i].GetComponent<Image>().color = new Color32(160, 160, 160, 255);
             }
 
         } //Change buttons manually. Also change button settings if needed.
