@@ -280,7 +280,6 @@ public class ProtagController : MonoBehaviour
             // =========================
 
             case AnimationState.hurt:
-                Debug.Log("Animation: " + state);
 
                 animator.Play("Protag_Hurt");
 

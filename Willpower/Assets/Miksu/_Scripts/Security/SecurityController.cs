@@ -21,6 +21,7 @@ public class SecurityController : Draggable
         chase, goToDoor, idle, struggle, stunned
     }
     public aiMode currentMode = aiMode.chase;
+    private bool downed = false;
 
     private enum Orientation
     {
@@ -50,8 +51,6 @@ public class SecurityController : Draggable
 
         // Get references
         graphics = animator.gameObject;
-
-        Debug.Log("Animator: " + animator.runtimeAnimatorController.name);
 
         AI_Start();
     }
@@ -127,7 +126,7 @@ public class SecurityController : Draggable
                 ChangeLayer(Layer.idle);
 
                 // Change the AI Mode to chase
-                currentMode = aiMode.chase;
+                ChangeMode(aiMode.chase);
             }
 
             yield return new WaitForSeconds(0.1f);
@@ -141,7 +140,7 @@ public class SecurityController : Draggable
             PlayAnimation(AnimationState.hover);
 
             // Change AI State
-            currentMode = aiMode.struggle;
+            ChangeMode(aiMode.struggle);
         }
     }
 
@@ -154,15 +153,17 @@ public class SecurityController : Draggable
         dragger.UndragMe(this as Draggable);
 
         // Check if destroyed
-        if (health <= 0f)
+        if (health < 0f)
         {
+            //Debug.Log("Health: " + health);
             BeDestroyed();
         }
     }
 
     protected override void BeDestroyed()
     {
-        currentMode = aiMode.stunned;
+        downed = true;
+        ChangeMode(aiMode.stunned);
     }
     #endregion
 
@@ -216,7 +217,8 @@ public class SecurityController : Draggable
     private void CheckOrientation()
     {
         if (currentOrientation == Orientation.left)
-        { orientation = 1f; } else { orientation = -1f; }
+        { orientation = 1f; }
+        else { orientation = -1f; }
 
         // LEFT: +1,    RIGHT: -1
         Vector3 scale = new Vector3(orientation, 1f, 1f);
@@ -239,8 +241,14 @@ public class SecurityController : Draggable
         CheckTargeting();
     }
 
+    private void ChangeMode(aiMode mode)
+    {
+        currentMode = mode;
+    }
+
     private void CheckTargeting()
     {
+
         switch (currentMode)
         {
             case aiMode.idle:
@@ -250,6 +258,9 @@ public class SecurityController : Draggable
             // ========================
 
             case aiMode.chase:
+
+                // Check Health
+                CheckHealth();
 
                 // Animation
                 PlayAnimation(AnimationState.run);
@@ -360,4 +371,12 @@ public class SecurityController : Draggable
     #endregion
 
     #endregion
+
+    private void CheckHealth()
+    {
+        if (health < 0f)
+        {
+            ChangeMode(aiMode.stunned);
+        }
+    }
 }
