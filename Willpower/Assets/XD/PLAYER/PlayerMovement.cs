@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+
+
+    public bool CanMove = false;
+
     [Header("Movement")]
     public float movementSpeed;
 
@@ -38,10 +42,13 @@ public class PlayerMovement : MonoBehaviour
     }
     void Update()
     {
+
+
         // ground check
         isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, groundLayer);
 
         MyInput();
+
 
         // handle drag
         if (isGrounded)
@@ -67,7 +74,7 @@ public class PlayerMovement : MonoBehaviour
         verticalInput = Input.GetAxisRaw("Vertical");
 
         // when to jump
-        if(Input.GetKey(jumpKey) && readyToJump && isGrounded)
+        if(Input.GetKey(jumpKey) && readyToJump && isGrounded && CanMove)
         {
             readyToJump = false;
 
@@ -79,6 +86,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void MovePlayer()
     {
+
+        if (!CanMove) { return; }
+
         // calculate movement direction
         movementDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
