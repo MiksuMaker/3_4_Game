@@ -10,6 +10,9 @@ public class WizardBehaviour : MonoBehaviour
     [SerializeField] GameObject playerObj;
     [SerializeField] ConvertoTo2D ConvertoTo2D;
 
+
+    PlayerMovement pmmammam;
+
     private Vector3 newLocation;
     private float speed = 3f;
 
@@ -18,6 +21,8 @@ public class WizardBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        pmmammam = FindObjectOfType<PlayerMovement>();
         wizspa = FindObjectOfType<WizardSpawner>();
         ConvertoTo2D = GetComponent<ConvertoTo2D>();
         step = speed * Time.deltaTime;
@@ -42,7 +47,12 @@ public class WizardBehaviour : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         wizspa.wizCur--;
-        if (collision.gameObject.CompareTag("Bullet")) ConvertoTo2D.ConvertTo2DSprite();
-        Destroy(this);
+        if (collision.gameObject.CompareTag("Bullet"))
+        {
+
+            pmmammam.audiothing.sound(pmmammam.audiothing.ripSo);
+            ConvertoTo2D.ConvertTo2DSprite();
+        }
+            Destroy(this);
     }
 }

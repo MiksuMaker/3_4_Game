@@ -24,7 +24,7 @@ public class KS_CutsceneHandler : MonoBehaviour
 
     private KS_Billboard[] letsRemoveTheseShallWe;
 
-    string phase = "MID";
+    string phase = "START";
     int phase_alt = 0;
     bool con = true;
 
@@ -105,7 +105,10 @@ public class KS_CutsceneHandler : MonoBehaviour
 
                         foreach (KS_Billboard billi in letsRemoveTheseShallWe)
                         {
-                            billi.gameObject.SetActive(false);
+                            if (billi.parentti != null)
+                            {
+                                billi.parentti.SetActive(false);
+                            }
                         }
 
                         player.gameObject.transform.position = wizSpa.gameObject.transform.position;
@@ -146,6 +149,7 @@ public class KS_CutsceneHandler : MonoBehaviour
                     case 0: 
                         if (wizSpa.areAllWizardsLikePwnedOrSomething()){
                             wait(2); phase_alt++;
+                            player.CanShoot = false;
                             musicPlayer.musicFadeOut();
                         }
                         break;

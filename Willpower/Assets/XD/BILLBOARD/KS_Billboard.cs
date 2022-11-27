@@ -8,6 +8,7 @@ public class KS_Billboard : MonoBehaviour
 
     public Camera cameraToLookAt;
     public bool rotateX = false;
+    public GameObject parentti;
 
 
     private void Awake()

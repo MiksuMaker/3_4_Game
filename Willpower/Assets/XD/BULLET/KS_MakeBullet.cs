@@ -26,6 +26,9 @@ public class KS_MakeBullet : MonoBehaviour
             GameObject bullet = KS_ObjectPooler.KS_SharedInstance.GetPooledObject();
             if (bullet != null)
             {
+
+                player.audiothing.sound(player.audiothing.POWso);
+
                 bullet.GetComponent<SpriteRenderer>().sprite = letters[index];
                 bullet.transform.position = bulletSpawnPoint.transform.position;
                 bullet.transform.rotation = cameraToLookAt.transform.rotation;

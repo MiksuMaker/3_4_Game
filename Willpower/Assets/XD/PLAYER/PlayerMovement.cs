@@ -7,10 +7,11 @@ public class PlayerMovement : MonoBehaviour
 
 
 
-
+    public SK_PlayAudio audiothing;
 
 
     public bool CanMove = false;
+    public bool CanInter = true;
     public bool CanShoot = false;
 
     [Header("Movement")]
@@ -43,6 +44,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        StartCoroutine(walkingSound());
         //rb.freezeRotation = true;
     }
     void Update()
@@ -104,6 +106,17 @@ public class PlayerMovement : MonoBehaviour
         else if (!isGrounded) rb.AddForce(movementDirection.normalized * movementSpeed * 10f * airMultiplier, ForceMode.Force);
     }
 
+
+    IEnumerator walkingSound()
+    {
+        yield return new WaitForSeconds((float).25);
+        if (isGrounded && (horizontalInput != 0 || verticalInput != 0)){
+            audiothing.sound(audiothing.walkSO);
+        }
+        StartCoroutine(walkingSound());
+
+    }
+
     private void SpeedControl()
     {
         Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
@@ -118,6 +131,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
+
+        audiothing.sound(audiothing.jumpSO);
         // reset y velocity
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
