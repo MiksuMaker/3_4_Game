@@ -8132,9 +8132,10 @@ MonoBehaviour:
     sentences:
     - And so WILL taught the wizards algebra
     - And became a 2D sprite
-    - the wizards granted Will the power of telekinesis
-    - and after 107 (+2) years of juridical paperwork
-    - 'the wizards materialized WILL onto an office desk '
+    - the wizards gave Will the telekinesis power
+    - after 107 (+2) years of juridical paperwork
+    - the wizards materialized WILL
+    - ' onto an office desk '
     - All with because of the power of the power
     - WILL POWER
   wizSpa: {fileID: 1071589631197119074}
