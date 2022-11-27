@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class AnswerBox : MonoBehaviour
 {   
     [SerializeField] GameObject reply;
-    [SerializeField] GameObject name, charSprite;
+    [SerializeField] GameObject charName, charSprite;
 
     private Object[] sprites;
 
@@ -16,31 +16,31 @@ public class AnswerBox : MonoBehaviour
 
         sprites = Resources.LoadAll("MiljaSprites", typeof(Sprite));
         TextMeshProUGUI replyText = reply.GetComponent<TextMeshProUGUI>();
-        TextMeshProUGUI nameText = name.GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI nameText = charName.GetComponent<TextMeshProUGUI>();
 
-        switch (GameManager.charNow)
+        switch (GameManagerMK.charNow)
         {
-            case GameManager.Character.Taenia:
+            case GameManagerMK.Character.Taenia:
                 nameText.text = "Taenia the Wife";
-                replyText.text = "How can this happen? You were just fine before the lunch I prepared...";
+                replyText.text = "How can this happen? You were just fine before the lunch...";
                 charSprite.GetComponent<Image>().sprite = FindSpriteWithName("wife");
                 break;
-            case GameManager.Character.Willow:
+            case GameManagerMK.Character.Willow:
                 nameText.text = "Willow the Kid";
                 replyText.text = "...";
                 charSprite.GetComponent<Image>().sprite = FindSpriteWithName("willow");
                 break;
-            case GameManager.Character.Mortti:
+            case GameManagerMK.Character.Mortti:
                 nameText.text = "Mortti";
                 replyText.text = "Good thing I managed to get here in time!";
                 charSprite.GetComponent<Image>().sprite = FindSpriteWithName("mortti");
                 break;
-            case GameManager.Character.Father:
+            case GameManagerMK.Character.Father:
                 nameText.text = "Father";
                 replyText.text = "Don't you stare at me.";
                 charSprite.GetComponent<Image>().sprite = FindSpriteWithName("father");
                 break;
-            case GameManager.Character.Doge:
+            case GameManagerMK.Character.Doge:
                 nameText.text = "Doge";
                 replyText.text = "Arf?";
                 charSprite.GetComponent<Image>().sprite = FindSpriteWithName("doge");

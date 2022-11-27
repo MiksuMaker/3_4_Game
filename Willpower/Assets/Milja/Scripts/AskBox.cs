@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class AskBox : MonoBehaviour
 {
@@ -28,43 +29,59 @@ public class AskBox : MonoBehaviour
     private void OnEnable()
     {
         qAmount = questionButtons.Count;
-        initializeQuestions();
-        ChangeQuestions(GameManager.charNow);
-    }
 
-
-    void ChangeQuestions(GameManager.Character character)
-    {
-        //Check what questions are available for the character and update boxes.
-
-        switch (character)
+        //Initialize questions if you haven't done that before.
+        if(questionsTaenia.Count < 1)
         {
-            case GameManager.Character.Taenia:
-                questions = questionsTaenia;
+            initializeQuestions();
+        }
+
+        switch (GameManagerMK.charNow)
+        {
+            case GameManagerMK.Character.Taenia:
+                ChangeQuestions(questionsTaenia);
                 break;
-            case GameManager.Character.Willow:
-                questions = questionsWillow;
+            case GameManagerMK.Character.Willow:
+                ChangeQuestions(questionsWillow);
                 break;
-            case GameManager.Character.Mortti:
-                questions = questionsMortti;
+            case GameManagerMK.Character.Mortti:
+                ChangeQuestions(questionsMortti);
                 break;
-            case GameManager.Character.Father:
-                questions = questionsFather;
+            case GameManagerMK.Character.Father:
+                ChangeQuestions(questionsFather);
                 break;
-            case GameManager.Character.Doge:
-                questions = questionsDoge;
+            case GameManagerMK.Character.Doge:
+                questionsDoge.Add(("Who is a good boi?","Woof!"));
+                ChangeQuestions(questionsDoge);
                 break;
             default:
                 Debug.Log("There is no character like that.");
                 break;
-        } //Change questions according to the character.
+        }
+    }
 
-        for (int i = 0; i < qAmount; i++)
+
+    void ChangeQuestions(List<(string, string)> que)
+    {
+        //Change questions according to the character.
+        Debug.Log(que.Count);
+
+        questions.Clear();
+
+        foreach ((string ,string) i in que)
         {
+            questions.Add(i);
+        }
+
+        qAmount = questions.Count;
+
+        for (int i = 0; i < questionButtons.Count; i++)
+        {
+
             //Edit buttons.
             TextMeshProUGUI textbox = questionButtons[i].gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
 
-            if (questions.Count > i)
+            if (qAmount > i)
             {
                 textbox.text = questions[i].Item1;
                 textbox.fontSize = qTextSize;
@@ -81,7 +98,20 @@ public class AskBox : MonoBehaviour
     {
         if (button < qAmount)
         {
-            this.GetComponent<AnswerBox>().EditAnswer(questions[button].Item2);
+            if (questions[button].Item1 != "") //print the answer and take one question out.
+            {
+                questionButtons[button].GetComponent<Image>().color = new Color(99,99,99);
+                this.GetComponent<AnswerBox>().EditAnswer(questions[button].Item2);
+                GameManagerMK.qLeft--;
+                if(GameManagerMK.qLeft < 1)
+                {
+                    GameManagerMK.OpenWill();
+                }
+            }
+            else
+            {
+                Debug.Log("Button is empty");
+            }
         }
         else
         {
@@ -126,11 +156,9 @@ public class AskBox : MonoBehaviour
         questionsFather.Add(("Do you remember the day I was born?", "I always wanted to have a 3D-child, but no. I got a two dimensional wimp."));
         questionsFather.Add(("What do you think about my wife?", "I have always tried to tell you that witch is poisoning you. Well, now it's too late."));
         questionsFather.Add(("What do you think about Willow?", "That brat is nowhere as ugly as you were as a child, but I hope she never tries to touch me again."));
-        questionsFather.Add(("Do you remember Mortti?", "Mortti was like a son I never had. I wish he had visited us more often. But oh, that boy was bad with money. When I gave him his weekly allowance he tend to spend it on the first scam he encountered."));
+        questionsFather.Add(("Do you remember Mortti?", "Mortti was like a son to me, I wish he had visited us more often. But oh, that boy was bad with money. He tended to spend his weekly allowance on the first scam he encountered."));
         questionsFather.Add(("Are you sad about my death?", "Kind of. I can't really keep writing my weekly column \"Son I Never Wanted\" if you are dead."));
         //Father questions
-        questionsDoge.Add(("Who is a good boi?", "Woof!"));
-
         
     }
 }

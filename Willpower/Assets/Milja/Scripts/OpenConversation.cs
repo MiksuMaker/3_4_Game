@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class OpenConversation : MonoBehaviour
 {
-    [SerializeField] GameManager.Character thisChar;
+    [SerializeField] GameManagerMK.Character thisChar;
 
     public void OnMouseDown()
     {
-        GameManager.charNow = thisChar;
-        GameObject.Find("GameManager").GetComponent<GameManager>().openConversation();
+        GameManagerMK.charNow = thisChar;
+        GameObject.Find("GameManager").GetComponent<GameManagerMK>().openConversation();
     }
 }

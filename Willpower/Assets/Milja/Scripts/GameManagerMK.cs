@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManagerMK : MonoBehaviour
 {
     public enum Character { Taenia, Willow, Mortti, Father, Doge }; //enum for character.
     public static Character charNow;
+
+    public static int qLeft = 10;
 
     [SerializeField] GameObject conversation;
 
@@ -24,4 +26,9 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
+
+    public static void OpenWill()
+    {
+
+    }
 }
