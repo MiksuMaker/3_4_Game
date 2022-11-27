@@ -39,7 +39,11 @@ public class KS_Bullet : MonoBehaviour
 
     }
 
-
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Wizard")) gameObject.SetActive(false);
+        else return;
+    }
 
     public void StartKillTimer()
     {

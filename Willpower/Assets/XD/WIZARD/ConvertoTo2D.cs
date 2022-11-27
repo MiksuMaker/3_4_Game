@@ -9,11 +9,14 @@ public class ConvertoTo2D : MonoBehaviour
     [SerializeField] SkinnedMeshRenderer SkinnedMeshRenderer;
     [SerializeField] GameObject wizard_2d;
 
+    private WizardSpawner wizardSpawnerScript;
+
     public bool convertTo2D = false;
 
     // Start is called before the first frame update
     void Start()
     {
+        wizardSpawnerScript = FindObjectOfType<WizardSpawner>();
     }
 
     // Update is called once per frame
@@ -27,6 +30,7 @@ public class ConvertoTo2D : MonoBehaviour
             SkinnedMeshRenderer = GetComponent<SkinnedMeshRenderer>();
             SkinnedMeshRenderer.enabled = false;
             wizard_2d.SetActive(true);
+            wizardSpawnerScript.UpdateText(1);
             StartCoroutine(KillWizard());
     }
 
@@ -35,6 +39,8 @@ public class ConvertoTo2D : MonoBehaviour
         wizardAnimator.SetBool("Spin", true);
         yield return new WaitForSeconds(2f);
         wizardAnimator.SetBool("Kill", true);
+
+
         yield return new WaitForSeconds(2f);
         Destroy(wizardParentObject);
     }

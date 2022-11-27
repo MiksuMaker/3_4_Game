@@ -24,7 +24,7 @@ public class KS_CutsceneHandler : MonoBehaviour
 
     private KS_Billboard[] letsRemoveTheseShallWe;
 
-    string phase = "START";
+    string phase = "MID";
     int phase_alt = 0;
     bool con = true;
 

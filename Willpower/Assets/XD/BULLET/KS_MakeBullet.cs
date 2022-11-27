@@ -8,6 +8,8 @@ public class KS_MakeBullet : MonoBehaviour
     public Sprite[] letters;
     private int index = 0;
 
+    [SerializeField] Transform bulletSpawnPoint;
+
     [SerializeField] PlayerMovement player;
 
     // Start is called before the first frame update
@@ -25,7 +27,7 @@ public class KS_MakeBullet : MonoBehaviour
             if (bullet != null)
             {
                 bullet.GetComponent<SpriteRenderer>().sprite = letters[index];
-                bullet.transform.position = this.transform.position;
+                bullet.transform.position = bulletSpawnPoint.transform.position;
                 bullet.transform.rotation = cameraToLookAt.transform.rotation;
                 KS_Bullet bul = bullet.GetComponent<KS_Bullet>();
                 bul.ResetStuff();
