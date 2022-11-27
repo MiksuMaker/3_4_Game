@@ -10,7 +10,7 @@ public class KS_DialogueTrigger : MonoBehaviour
 
 
 
-    bool talked = false;
+    [SerializeField] bool talked = false;
 
     private void Awake()
     {

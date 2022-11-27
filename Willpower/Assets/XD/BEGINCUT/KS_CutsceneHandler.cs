@@ -20,6 +20,8 @@ public class KS_CutsceneHandler : MonoBehaviour
     [SerializeField] GameObject midSprite2;
     [SerializeField] GameObject endSprite;
 
+    [SerializeField] Animator tutoAnima;
+
     private KS_Billboard[] letsRemoveTheseShallWe;
 
     string phase = "START";
@@ -64,7 +66,9 @@ public class KS_CutsceneHandler : MonoBehaviour
                     case 3: if (click()) { willAnimator.SetBool("isAnim",true); phase_alt++; wait(2); } ;break;
                     case 4: { dial_c(); phase_alt++; }; break;
                     case 6: if (click()) { willAnimator.SetBool("isAnim", false); dialMana.EndDialogue() ; wait(2); phase_alt++; }; break;
-                    case 7: startBgAnimator.SetBool("FADEOUT", true);phase_alt++; player.CanMove = true;phase_alt = 0;phase = "MID_WAIT";break;
+                    case 7: startBgAnimator.SetBool("FADEOUT", true);phase_alt++; player.CanMove = true;phase_alt = 0;phase = "MID_WAIT";
+                        tutoAnima.SetTrigger("KS_TutoAnima");
+                        break;
 
 
 
@@ -91,14 +95,22 @@ public class KS_CutsceneHandler : MonoBehaviour
 
                         player.gameObject.transform.position = wizSpa.gameObject.transform.position;
                         break;
-                    case 11: musicPlayer.musicPlay(musicPlayer.mu_end);phase_alt++;break;
-                    case 12: startBgAnimator.SetBool("XDIMENSIO", true);
-                        player.CanMove = true;StartCoroutine(wizSpa.SpawnWizards()); player.CanShoot = true; phase_alt++;
+                    case 11: ;phase_alt++;break;
 
-                        midSprite1.SetActive(false);
-                        midSprite2.SetActive(false);
+                    case 13:
+    
+                        if (click()) {
+                            midSprite1.SetActive(false);
+                            midSprite2.SetActive(false);
+                            dial_c(); phase_alt++; };
                         break;
-                    case 14:
+
+
+                    case 15: startBgAnimator.SetBool("XDIMENSIO", true);
+                        player.CanMove = true;StartCoroutine(wizSpa.SpawnWizards()); player.CanShoot = true; phase_alt++;
+                        musicPlayer.musicPlay(musicPlayer.mu_end);
+                        break;
+                    case 17:
                         phase_alt = 0;
                         phase = "END";
                         break;
