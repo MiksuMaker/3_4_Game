@@ -12,6 +12,8 @@ public class PlayerCam : MonoBehaviour
     float xRotation;
     float yRotation;
 
+    public bool rotationEnabled = false;
+
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -21,6 +23,7 @@ public class PlayerCam : MonoBehaviour
     
     void Update()
     {
+        if (!rotationEnabled) return;
         // get mouse input
         float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
         float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;

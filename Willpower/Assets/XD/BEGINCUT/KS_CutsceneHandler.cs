@@ -7,12 +7,12 @@ public class KS_CutsceneHandler : MonoBehaviour
 {
 
     KS_DialogueManager dialMana;
+    PlayerCam playerCam;
     KS_Music musicPlayer;
     [SerializeField] Animator willAnimator;
     [SerializeField] Animator startBgAnimator;
 
     [SerializeField] PlayerMovement player;
-
     
     [SerializeField] private GameObject image_start;
 
@@ -41,6 +41,7 @@ public class KS_CutsceneHandler : MonoBehaviour
     private void Start()
     {
         dialMana = FindObjectOfType<KS_DialogueManager>();
+        playerCam = FindObjectOfType<PlayerCam>();
         musicPlayer = FindObjectOfType<KS_Music>();
         midSprite1.SetActive(false);
         midSprite2.SetActive(false);
@@ -70,7 +71,10 @@ public class KS_CutsceneHandler : MonoBehaviour
                     case 7: startBgAnimator.SetBool("FADEOUT", true);phase_alt++; player.CanMove = true;
                         
                         wait(2);
-                        
+
+                        dialMana.EnableTalkedCounter();
+                        playerCam.rotationEnabled = true;
+
                         break;
 
                     case 8:
@@ -96,7 +100,7 @@ public class KS_CutsceneHandler : MonoBehaviour
                 switch(phase_alt)
                 {
 
-                    case 0: wait(1); phase_alt++; player.CanMove = false; break;
+                    case 0: wait(1); phase_alt++; player.CanMove =   false; dialMana.DisableTalkedCounter(); break;
                     case 1: startBgAnimator.SetBool("FADEOUT", false); phase_alt++;break;
                     case 2: dialMana.StartDialogue(cut_middle); phase_alt++; break;
                     case 5: dialMana.name = ""; phase_alt++;break;

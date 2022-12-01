@@ -11,6 +11,7 @@ public class KS_DialogueManager : MonoBehaviour
 
     public TextMeshProUGUI nametext;
     public TextMeshProUGUI dialogueText;
+    public TMP_Text talkedCounterText;
 
     private KS_DialogueActivator dialAct;
 
@@ -112,10 +113,9 @@ public class KS_DialogueManager : MonoBehaviour
         }
     }
 
-
-
     public bool checkTalkedList()
     {
+        UpdateTalkedCounter();
         foreach (KS_DialogueTrigger _d in talked_list)
         {
             if (!_d.getTalked()) { return false; }
@@ -124,10 +124,29 @@ public class KS_DialogueManager : MonoBehaviour
         return true;
     }
 
-
+    public void UpdateTalkedCounter()
+    {
+        int counter = 0;
+        foreach (KS_DialogueTrigger _d in talked_list)
+        {
+            if (_d.getTalked()) { counter++; }
+        }
+        counter--;
+        talkedCounterText.text = $"{counter}/9";
+    }
 
     public bool getFinished()
     {
         return finished;
+    }
+
+    public void EnableTalkedCounter()
+    {
+        talkedCounterText.gameObject.SetActive(true);
+    }
+
+    public void DisableTalkedCounter()
+    {
+        talkedCounterText.gameObject.SetActive(false);
     }
 }
