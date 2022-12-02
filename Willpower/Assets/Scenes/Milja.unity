@@ -419,7 +419,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &55093085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5353,7 +5353,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "In this will, I, Will, will decide who gets my things after I die.\n\n 
-    MY HOUSE GOES TO \n\n\n  MY MONEY GOES TO\n\n\nMY COMPANY GOES TO\n\n\n                     
+    MY HOUSE GOES TO \n\n\nMY COMPANY GOES TO\n\n\nMY MONEY GOES TO\n\n\n                     
     GOES TO\n\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c70b39696af933e4ab18f0fd6dd2a2fa, type: 2}
