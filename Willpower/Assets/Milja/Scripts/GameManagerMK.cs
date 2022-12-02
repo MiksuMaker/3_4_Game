@@ -30,10 +30,8 @@ public class GameManagerMK : MonoBehaviour
     {
         if(qLeft < 1)
         {
-            GameObject.Find("Room").SetActive(false);
-            OpenWill();
-            qLeft = 100;
-            GameObject.Find("TextCounter").GetComponent<TextMeshProUGUI>().text = "";
+            StartCoroutine(openWill());
+
         }
     }
 
@@ -43,5 +41,21 @@ public class GameManagerMK : MonoBehaviour
         closeConversation();
         will.SetActive(true);
 
+    }
+
+    IEnumerator openWill()
+    {
+        while (true)
+        {
+            if (Input.anyKeyDown)
+            {
+                GameObject.Find("Room").SetActive(false);
+                OpenWill();
+                qLeft = 10;
+                GameObject.Find("TextCounter").GetComponent<TextMeshProUGUI>().text = "";
+                break;
+            }
+            yield return null;
+        }
     }
 }

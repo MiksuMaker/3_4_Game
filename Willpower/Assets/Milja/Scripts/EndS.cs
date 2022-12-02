@@ -51,7 +51,16 @@ public class EndS : MonoBehaviour
                 break;
         }
 
-        yield return new WaitForSeconds(waitTime);
+        while (true)
+        {
+
+            yield return null;
+            if (Input.anyKeyDown)
+            {
+                break;
+            }
+        }
+
 
         switch (WillScript.whoGetsMoney)
         {
@@ -77,8 +86,16 @@ public class EndS : MonoBehaviour
                 break;
         }
 
-        yield return new WaitForSeconds(waitTime);
 
+        while (true)
+        {
+
+            yield return null;
+            if (Input.anyKeyDown)
+            {
+                break;
+            }
+        }
         switch (WillScript.whoGetsCompany)
         {
             case "Taenia":
@@ -103,7 +120,15 @@ public class EndS : MonoBehaviour
                 break;
         }
 
-        yield return new WaitForSeconds(waitTime);
+        while (true)
+        {
+
+            yield return null;
+            if (Input.anyKeyDown)
+            {
+                break;
+            }
+        }
 
         switch (WillScript.whoGetsDog)
         {
@@ -129,7 +154,16 @@ public class EndS : MonoBehaviour
                 break;
         }
 
-        yield return new WaitForSeconds(waitTime);
+
+        while (true)
+        {
+
+            yield return null;
+            if (Input.anyKeyDown)
+            {
+                break;
+            }
+        }
 
         SceneManager.LoadScene("Menu", LoadSceneMode.Single);
     }
