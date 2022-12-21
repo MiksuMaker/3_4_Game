@@ -31,7 +31,7 @@ public class SecurityController : Draggable
     Orientation currentOrientation = Orientation.left;
     float orientation = 1f;
 
-    float yAxisTreshold = 1f;
+    float yAxisTreshold = 2f;
     #endregion
 
 
@@ -282,6 +282,17 @@ public class SecurityController : Draggable
 
             case aiMode.goToDoor:
 
+                // Check Health
+                CheckHealth();
+
+                // Animation
+                PlayAnimation(AnimationState.run);
+
+                // Move
+                MoveTowardsTarget();
+
+                // Check for doors
+
                 break;
 
             // ========================
@@ -307,7 +318,7 @@ public class SecurityController : Draggable
         //if (player.transform.position.y > (transform.position.y + yAxisTreshold))
         //{
         //    // If Player is too high, go to nearest door
-        //    //currentMode = aiMode.goToDoor;
+        //    currentMode = aiMode.goToDoor;
         //}
         //else
         {
@@ -386,6 +397,37 @@ public class SecurityController : Draggable
         // Limit velocity on X-axis
         rb.velocity = new Vector2(Mathf.Min(rb.velocity.x, maxVelocity), rb.velocity.y);
 
+    }
+
+    private void MoveAndCheckDoors()
+    {
+        if (!(player.transform.position.y > (transform.position.y + yAxisTreshold)))
+        {
+            // If Player is too high, go to nearest door
+            currentMode = aiMode.chase;
+        }
+        else
+        {
+            // Keep chasing, check X-coord
+            if (currentOrientation == Orientation.left)
+            {
+                // Check need to TURN to RIGHT
+                if (player.transform.position.x > transform.position.x)
+                {
+                    // Turn
+                    TurnAfterDelay(Orientation.right);
+                }
+            }
+            else
+            {
+                // Check the need to TURN to LEFT
+                if (player.transform.position.x < transform.position.x)
+                {
+                    // Turn
+                    TurnAfterDelay(Orientation.left);
+                }
+            }
+        }
     }
     #endregion
 

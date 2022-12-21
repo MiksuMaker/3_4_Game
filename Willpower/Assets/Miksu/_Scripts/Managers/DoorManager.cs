@@ -32,14 +32,20 @@ public class DoorManager : MonoBehaviour
     #endregion
 
     #region MOVING
-    public void FindNearestDoor(float yCoord)
+    public Vector3 FindNearestDoor(float yCoord)
     {
         Door nearestDoor = doors[0];
+        float nearest_Y_Level = doors[0].transform.position.y;
 
         foreach (Door door in doors)
         {
+            // Check if on the same level
+            //if (door.transform)
 
+            // Check which door is closest
         }
+
+        return Vector3.zero;
     }
     #endregion
 }
