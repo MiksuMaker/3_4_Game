@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 5256903346373350379}
   - component: {fileID: 5256903346373350378}
   - component: {fileID: 5256903346373350373}
-  m_Layer: 0
+  - component: {fileID: 708078416}
+  m_Layer: 11
   m_Name: Guard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54,7 +55,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &5256903346373350373
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -68,7 +69,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.02362074, y: 0.6016909}
+  m_Offset: {x: 0.02362074, y: 0.5536068}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -79,8 +80,33 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.2607661, y: 1.1815856}
+  m_Size: {x: 0.2607661, y: 1.0854174}
   m_EdgeRadius: 0
+--- !u!114 &708078416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5256903346373350372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2467a32828e90c146b28352b3e6ae413, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  velocityHurtLimit: 1
+  MAXhealth: 50
+  health: 0
+  hurtIndicator: {fileID: 3405724554996769751, guid: 71d420ca501b6f140b2dfe6c48d72735, type: 3}
+  mass: 1
+  velocityLimit: 5
+  currentLayer: 0
+  rb: {fileID: 5256903346373350378}
+  maxDistance: 2
+  minDistance: 0.1
+  moveSpeed: 10
+  maxVelocity: 10
+  currentMode: 0
 --- !u!1 &5256903347023794769
 GameObject:
   m_ObjectHideFlags: 0
@@ -92,7 +118,7 @@ GameObject:
   - component: {fileID: 5256903347023794774}
   - component: {fileID: 5256903347023794772}
   - component: {fileID: 5256903347023794775}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Graphics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -154,7 +180,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: -1305768798, guid: bf71493c6b119a34ab1dcde9f4e67243, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

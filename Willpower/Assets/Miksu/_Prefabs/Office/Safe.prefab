@@ -131,7 +131,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -544017044, guid: f2ca937bd6615b94aa1c0294b0bbd043, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -259,10 +259,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocityHurtLimit: 4
-  MAXhealth: 10
+  MAXhealth: 100
   health: 0
-  mass: 20
-  velocityLimit: 5
+  hurtIndicator: {fileID: 4344682802275429819, guid: 51674621ad0a6cc4f9a67f9cb586a123, type: 3}
+  mass: 15
+  velocityLimit: 7
+  currentLayer: 0
   rb: {fileID: 0}
   maxDistance: 2
   minDistance: 0.1

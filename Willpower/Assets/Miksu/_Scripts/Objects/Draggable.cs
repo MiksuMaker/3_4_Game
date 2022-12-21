@@ -17,6 +17,8 @@ public class Draggable : MonoBehaviour
     protected float MAXhealth = 10;
     [SerializeField]
     protected float health;
+    [SerializeField]
+    public GameObject hurtIndicator;
 
     [Header("Physics")]
     [SerializeField]
@@ -115,7 +117,7 @@ public class Draggable : MonoBehaviour
         // Add the Force
         rb.AddForce(GetDirection(mousePos) * dragForce, ForceMode2D.Force);
 
-        
+
 
         // Keep the timer running
         flyTime = 1f;
@@ -169,7 +171,7 @@ public class Draggable : MonoBehaviour
     #region COLLISIONS
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        //Debug.Log("Velocity: " + rb.velocity.magnitude);
+        Debug.Log("Velocity: " + rb.velocity.magnitude);
 
         // Test how hard you hit something
         if (rb.velocity.magnitude >= velocityHurtLimit)
@@ -237,6 +239,13 @@ public class Draggable : MonoBehaviour
     {
         //Debug.Log("Damage taken: " + amount);
 
+        // UI - Spawn Hurt indicator
+        if (hurtIndicator != null)
+        {
+            GameObject hurt = Instantiate(hurtIndicator, transform.position, transform.rotation) as GameObject;
+            Destroy(hurt, 1f);
+        }
+
         // Take damage
         health -= amount;
 
@@ -250,6 +259,12 @@ public class Draggable : MonoBehaviour
     protected virtual void BeDestroyed()
     {
         // Play animation
+        if (hurtIndicator != null)
+        {
+            GameObject hurt = Instantiate(hurtIndicator, transform.position, transform.rotation) as GameObject;
+            hurt.transform.localScale = new Vector3(1.5f, 1.5f);
+            Destroy(hurt, 1f);
+        }
 
         // Die
         Destroy(gameObject);

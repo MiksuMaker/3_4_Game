@@ -146,6 +146,14 @@ public class SecurityController : Draggable
 
     protected override void TakeDamage(float amount)
     {
+        // UI - Spawn Hurt indicator
+        if (hurtIndicator != null)
+        {
+            GameObject hurt = Instantiate(hurtIndicator, transform.position, transform.rotation) as GameObject;
+            Destroy(hurt, 1f);
+        }
+
+
         // Take damage
         health -= amount;
 
@@ -361,8 +369,19 @@ public class SecurityController : Draggable
             forwards = new Vector2(1f, 0f);     // Right
         }
 
-        // Move
-        rb.AddForce(forwards * moveSpeed * Time.deltaTime, ForceMode2D.Impulse);
+        Debug.DrawLine(transform.position, new Vector3(transform.position.x,
+                                                transform.position.y - 0.2f,
+                                                transform.position.z), Color.red);
+
+        // If Guard is touching ground
+        if (Physics2D.OverlapCircle(new Vector3(transform.position.x,
+                                                transform.position.y - 0.2f,
+                                                transform.position.z),
+                                    0.5f, LayerMask.GetMask("Default")))
+        {
+            // Move
+            rb.AddForce(forwards * moveSpeed * Time.deltaTime, ForceMode2D.Impulse);
+        }
 
         // Limit velocity on X-axis
         rb.velocity = new Vector2(Mathf.Min(rb.velocity.x, maxVelocity), rb.velocity.y);
