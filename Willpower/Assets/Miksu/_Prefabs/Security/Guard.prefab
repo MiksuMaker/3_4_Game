@@ -94,8 +94,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2467a32828e90c146b28352b3e6ae413, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocityHurtLimit: 1
-  MAXhealth: 50
+  velocityHurtLimit: 3
+  MAXhealth: 100
   health: 0
   hurtIndicator: {fileID: 3405724554996769751, guid: 71d420ca501b6f140b2dfe6c48d72735, type: 3}
   mass: 1

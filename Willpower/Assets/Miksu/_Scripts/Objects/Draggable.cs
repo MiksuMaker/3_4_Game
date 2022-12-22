@@ -12,7 +12,7 @@ public class Draggable : MonoBehaviour
 
     [Header("Health")]
     [SerializeField]
-    float velocityHurtLimit = 5f;
+    protected float velocityHurtLimit = 5f;
     [SerializeField]
     protected float MAXhealth = 10;
     [SerializeField]
@@ -239,10 +239,18 @@ public class Draggable : MonoBehaviour
     {
         //Debug.Log("Damage taken: " + amount);
 
+        amount = Mathf.Ceil(amount);
+
         // UI - Spawn Hurt indicator
         if (hurtIndicator != null)
         {
             GameObject hurt = Instantiate(hurtIndicator, transform.position, transform.rotation) as GameObject;
+
+            // Scale according to damage taken
+            //hurt.transform.localScale = new Vector3();
+
+
+
             Destroy(hurt, 1f);
         }
 

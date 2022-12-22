@@ -187,10 +187,19 @@ public class SecurityController : Draggable
 
     protected override void TakeDamage(float amount)
     {
+
+        amount = Mathf.Ceil(amount);
+
         // UI - Spawn Hurt indicator
         if (hurtIndicator != null)
         {
             GameObject hurt = Instantiate(hurtIndicator, transform.position, transform.rotation) as GameObject;
+
+            // Scale hurt UI depending on the amount
+            float scale = Mathf.Min(1f, (0.5f + ((amount - velocityHurtLimit)* 0.1f)));
+
+            hurt.transform.localScale = new Vector3(scale, scale, scale);
+
             Destroy(hurt, 1f);
         }
 
