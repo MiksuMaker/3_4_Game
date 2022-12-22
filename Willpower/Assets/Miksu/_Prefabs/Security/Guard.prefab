@@ -105,7 +105,7 @@ MonoBehaviour:
   maxDistance: 2
   minDistance: 0.1
   moveSpeed: 10
-  maxVelocity: 10
+  maxVelocity: 5
   currentMode: 0
 --- !u!1 &5256903347023794769
 GameObject:

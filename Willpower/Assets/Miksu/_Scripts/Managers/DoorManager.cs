@@ -16,10 +16,12 @@ public class DoorManager : MonoBehaviour
         // Get the doors
         #region door fetcing
         Door[] _doors = FindObjectsOfType<Door>();
-        foreach (Door _door in doors)
+        foreach (Door _door in _doors)
         {
             doors.Add(_door);
         }
+
+        Debug.Log("Number of doors: " + doors.Count);
         #endregion
 
         // Get Player
@@ -32,20 +34,77 @@ public class DoorManager : MonoBehaviour
     #endregion
 
     #region MOVING
-    public Vector3 FindNearestDoor(float yCoord)
+    public GameObject GoToNearestDoor(Vector3 currentPosition)
     {
-        Door nearestDoor = doors[0];
-        float nearest_Y_Level = doors[0].transform.position.y;
+        //Debug.Log("Doors[0]: " + doors)
+        return doors[0].gameObject;
 
-        foreach (Door door in doors)
-        {
-            // Check if on the same level
-            //if (door.transform)
+        //float yCoord = currentPosition.y;
 
-            // Check which door is closest
-        }
+        //// Check if the only door
+        //if (doors.Count == 1)
+        //{
+        //    return doors[0].gameObject;
+        //}
 
-        return Vector3.zero;
+        ////Door nearestDoor = doors[0];
+        ////float nearest_Y_Level = doors[0].transform.position.y;
+
+
+        //List<Door> viableDoors = new List<Door>();
+
+
+        //foreach (Door door in doors)
+        //{
+        //    // Check which doors are on the same level or above
+
+        //    if (door.transform.position.y <= yCoord)
+        //    {
+        //        viableDoors.Add(door);
+        //    }
+        //}
+
+        //// Check which doors are closest on the Y level
+        //Door closestDoor = viableDoors[0];
+        //foreach (Door door in viableDoors)
+        //{
+        //    // If challenger is lower than the closest Door
+        //    if (door.transform.position.y < closestDoor.transform.position.y)
+        //    {
+        //        // If smaller (further), remove from doors
+        //        viableDoors.Remove(door);
+        //    }
+        //    else
+        //    {
+        //        // Is same or higher?
+        //        if (door.transform.position.y == closestDoor.transform.position.y)
+        //        {
+        //            // Same, keep them both
+        //        }
+        //        else
+        //        {
+        //            // Challenger is higher, remove closest Door
+        //            viableDoors.Remove(closestDoor);
+
+        //            // New closest door
+        //            closestDoor = door;
+        //        }
+        //    }
+        //}
+
+        //// Get one of those
+        //return viableDoors[Random.Range(0, viableDoors.Count + 1)].gameObject;
     }
+
+    //IEnumerator TryToMoveGuardBehindDoor()  // Should be handled by the door?
+    //{
+    //    // Check if 
+
+    //    //bool unspawned = false;
+    //    //while (unspawned)
+    //    //{
+    //    //    yield return new WaitForSeconds(0.5f);
+    //    //}
+    //}
     #endregion
 }

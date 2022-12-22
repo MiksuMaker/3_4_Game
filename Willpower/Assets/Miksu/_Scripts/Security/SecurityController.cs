@@ -9,6 +9,7 @@ public class SecurityController : Draggable
     #region AI Properties
     GameObject currentTarget;
     GameObject player;
+    DoorManager doorManager;
 
     [Header("Moving")]
     [SerializeField]
@@ -18,7 +19,7 @@ public class SecurityController : Draggable
 
     public enum aiMode
     {
-        chase, goToDoor, idle, struggle, stunned
+        chase, goToDoor, idle, struggle, stunned, roam
     }
     public aiMode currentMode = aiMode.chase;
     private bool downed = false;
@@ -111,7 +112,7 @@ public class SecurityController : Draggable
             {
                 // Release the freeze on rotation
                 RotationOnOff(false);
-                
+
                 // Keep the Layer on Flying as long as the timer hasn't run out
 
                 while (flyTime > 0)
@@ -161,7 +162,7 @@ public class SecurityController : Draggable
         float getUpTime = 1f;
         float timePassed = 0f;
 
-        while(timePassed <= getUpTime)
+        while (timePassed <= getUpTime)
         {
             // Rotate the character upright
             transform.rotation = Quaternion.Lerp(transform.rotation,
@@ -196,7 +197,7 @@ public class SecurityController : Draggable
             GameObject hurt = Instantiate(hurtIndicator, transform.position, transform.rotation) as GameObject;
 
             // Scale hurt UI depending on the amount
-            float scale = Mathf.Min(1f, (0.5f + ((amount - velocityHurtLimit)* 0.1f)));
+            float scale = Mathf.Min(1f, (0.5f + ((amount - velocityHurtLimit) * 0.1f)));
 
             hurt.transform.localScale = new Vector3(scale, scale, scale);
 
@@ -292,11 +293,20 @@ public class SecurityController : Draggable
         // Find Player
         player = FindObjectOfType<ProtagController>().gameObject;
         currentTarget = player;
+
+        // Find Door Manager
+        doorManager = FindObjectOfType<DoorManager>(); if (!doorManager) { Debug.Log("No DoorManager found!"); }
     }
 
     private void AI_Update()
     {
-        CheckTargeting();
+        //if (currentMode != aiMode.stunned || currentMode != aiMode.struggle)
+        //{
+        //    //Debug.Log("Current AiMode: " + currentMode.ToString());
+        //    //CheckPlayerY_Pos();
+        //}
+
+        CheckMode();
     }
 
     private void ChangeMode(aiMode mode)
@@ -304,12 +314,14 @@ public class SecurityController : Draggable
         currentMode = mode;
     }
 
-    private void CheckTargeting()
+    private void CheckMode()
     {
 
         switch (currentMode)
         {
             case aiMode.idle:
+
+                PlayAnimation(AnimationState.idle);
 
                 break;
 
@@ -317,20 +329,28 @@ public class SecurityController : Draggable
 
             case aiMode.chase:
 
+                // Check Targeting
+                CheckPlayerY_Pos();
+                CheckPlayerXPos();
+
+
                 // Check Health
                 CheckHealth();
 
                 // Animation
                 PlayAnimation(AnimationState.run);
 
-                CheckPlayerPos();
-                MoveTowardsTarget();
+                MoveForwards();
 
                 break;
 
             // ========================
 
             case aiMode.goToDoor:
+
+                // Check Targeting
+                CheckPlayerY_Pos();
+                CheckCurrentTargetPos();
 
                 // Check Health
                 CheckHealth();
@@ -339,9 +359,28 @@ public class SecurityController : Draggable
                 PlayAnimation(AnimationState.run);
 
                 // Move
-                MoveTowardsTarget();
+                MoveForwards();
 
-                // Check for doors
+                // Check for doors --> HANDLED BY OnTriggerEnter()
+
+                break;
+
+            // ========================
+
+            case aiMode.roam:
+
+                Debug.Log("Roaming!");
+
+                //ChangeMode(aiMode.chase);
+
+                break;
+
+            // ========================
+
+            case aiMode.struggle:
+
+                // Animation
+                PlayAnimation(AnimationState.hover);
 
                 break;
 
@@ -361,14 +400,37 @@ public class SecurityController : Draggable
         }
     }
 
-    private void CheckPlayerPos()
+    private void CheckPlayerXPos()
     {
-        // Check Player Y-coordinate
 
-        //if (player.transform.position.y > (transform.position.y + yAxisTreshold))
+        // Keep chasing, check X-coord
+        if (currentOrientation == Orientation.left)
+        {
+            // Check need to TURN to RIGHT
+            if (player.transform.position.x > transform.position.x)
+            {
+                // Turn
+                TurnAfterDelay(Orientation.right);
+            }
+        }
+        else
+        {
+            // Check the need to TURN to LEFT
+            if (player.transform.position.x < transform.position.x)
+            {
+                // Turn
+                TurnAfterDelay(Orientation.left);
+            }
+        }
+
+    }
+
+    private void CheckCurrentTargetPos()
+    {
+        //if (currentTarget.transform.position.y > (transform.position.y + yAxisTreshold))
         //{
-        //    // If Player is too high, go to nearest door
-        //    currentMode = aiMode.goToDoor;
+        //    // If The Door is too high, fetch a new door target
+        //    //currentTarget = ;
         //}
         //else
         {
@@ -376,7 +438,7 @@ public class SecurityController : Draggable
             if (currentOrientation == Orientation.left)
             {
                 // Check need to TURN to RIGHT
-                if (player.transform.position.x > transform.position.x)
+                if (currentTarget.transform.position.x > transform.position.x)
                 {
                     // Turn
                     TurnAfterDelay(Orientation.right);
@@ -385,7 +447,7 @@ public class SecurityController : Draggable
             else
             {
                 // Check the need to TURN to LEFT
-                if (player.transform.position.x < transform.position.x)
+                if (currentTarget.transform.position.x < transform.position.x)
                 {
                     // Turn
                     TurnAfterDelay(Orientation.left);
@@ -394,12 +456,55 @@ public class SecurityController : Draggable
         }
     }
 
+    protected void CheckPlayerY_Pos()
+    {
+        // Check if Player is ABOVE
+        if (player.transform.position.y > (transform.position.y + yAxisTreshold))
+        {
+            // Player is too high! Look for nearest door!
+            currentMode = aiMode.goToDoor;
+            currentTarget = doorManager.GoToNearestDoor(transform.position);
+        }
+        // Check if the Player is BELOW
+        else if (player.transform.position.y < (transform.position.y - yAxisTreshold))
+        {
+            // Player is not on this level
+            // --> Either ROAM
+            //         OR
+            //              GoToDoor
+
+            #region Roam or GoTODoor
+            // Check that the decisions isn't made already
+            //if (currentMode != aiMode.goToDoor || currentMode != aiMode.roam)
+            //{
+            //    int randNum = Random.Range(0, 3);
+            //    if (randNum == 0)
+            //    {
+            //        // Go to Door
+            //        currentMode = aiMode.goToDoor;
+            //    }
+            //    else
+            //    {
+            //        // Roam
+            //        currentMode = aiMode.roam;
+            //    }
+            //}
+            #endregion
+        }
+        // If the Player is ON THE SAME LEVEL
+        else
+        {
+            // Chase!
+            currentMode = aiMode.chase;
+        }
+    }
+
     #region Turning
     private void TurnAfterDelay(Orientation direction)
     {
         //Debug.Log("Turning to: " + direction);
 
-        float time = Random.Range(0.1f, 0.5f);
+        float time = Random.Range(0.2f, 0.6f);
 
         StartCoroutine(TimedTurn(direction, time));
     }
@@ -417,7 +522,7 @@ public class SecurityController : Draggable
     #endregion
 
     #region MOVING
-    private void MoveTowardsTarget()
+    private void MoveForwards()
     {
         // Move forwards
         Vector2 forwards;
@@ -446,38 +551,20 @@ public class SecurityController : Draggable
 
         // Limit velocity on X-axis
         rb.velocity = new Vector2(Mathf.Min(rb.velocity.x, maxVelocity), rb.velocity.y);
+        rb.velocity = new Vector2(Mathf.Max(rb.velocity.x, -maxVelocity), rb.velocity.y);
 
     }
 
-    private void MoveAndCheckDoors()
+
+    public bool DoorTrigger(Vector3 pos)
     {
-        if (!(player.transform.position.y > (transform.position.y + yAxisTreshold)))
+        // Check if Door is current Target
+        if (currentTarget.transform.position == pos)
         {
-            // If Player is too high, go to nearest door
-            currentMode = aiMode.chase;
+            return true;
         }
-        else
-        {
-            // Keep chasing, check X-coord
-            if (currentOrientation == Orientation.left)
-            {
-                // Check need to TURN to RIGHT
-                if (player.transform.position.x > transform.position.x)
-                {
-                    // Turn
-                    TurnAfterDelay(Orientation.right);
-                }
-            }
-            else
-            {
-                // Check the need to TURN to LEFT
-                if (player.transform.position.x < transform.position.x)
-                {
-                    // Turn
-                    TurnAfterDelay(Orientation.left);
-                }
-            }
-        }
+
+        return false;
     }
     #endregion
 
