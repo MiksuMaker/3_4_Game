@@ -171,7 +171,7 @@ public class Draggable : MonoBehaviour
     #region COLLISIONS
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Velocity: " + rb.velocity.magnitude);
+        //Debug.Log("Velocity: " + rb.velocity.magnitude);
 
         // Test how hard you hit something
         if (rb.velocity.magnitude >= velocityHurtLimit)
