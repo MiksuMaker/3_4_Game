@@ -80,6 +80,7 @@ public class SecurityController : Draggable
         }
         #endregion
 
+
         // AI Update
         AI_Update();
     }
@@ -108,8 +109,9 @@ public class SecurityController : Draggable
         {
             if (gameObject.layer == LayerMask.NameToLayer("Flying"))
             {
-
-
+                // Release the freeze on rotation
+                RotationOnOff(false);
+                
                 // Keep the Layer on Flying as long as the timer hasn't run out
 
                 while (flyTime > 0)
@@ -122,6 +124,9 @@ public class SecurityController : Draggable
                     yield return new WaitForFixedUpdate();
                 }
 
+                // Reset rotation
+                RotationOnOff(true);
+
                 // Change the Layer back to Draggable
                 ChangeLayer(Layer.idle);
 
@@ -130,6 +135,42 @@ public class SecurityController : Draggable
             }
 
             yield return new WaitForSeconds(0.1f);
+        }
+    }
+
+    protected void RotationOnOff(bool onOff)
+    {
+        if (onOff == false) // Unfreeze rotation
+        {
+            rb.freezeRotation = false;
+            // Give a little spin
+            if (rb.angularVelocity < 0.1f) { rb.AddTorque(Random.Range(-0.2f, 0.2f), ForceMode2D.Impulse); }
+
+        }
+        else    // Reset rotation
+        {
+            //StartCoroutine(ResetRotation());
+            rb.SetRotation(0f);
+            rb.freezeRotation = true;
+        }
+    }
+
+    IEnumerator ResetRotation()
+    {
+        WaitForSeconds interval = new WaitForSeconds(0.1f);
+        float getUpTime = 1f;
+        float timePassed = 0f;
+
+        while(timePassed <= getUpTime)
+        {
+            // Rotate the character upright
+            transform.rotation = Quaternion.Lerp(transform.rotation,
+                                                 Quaternion.Euler(0f, 0f, 0f),
+                                                 timePassed);
+
+            timePassed += Time.deltaTime;
+
+            yield return interval;
         }
     }
 
