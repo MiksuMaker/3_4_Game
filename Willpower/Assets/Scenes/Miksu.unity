@@ -429,7 +429,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 372717748462116122, guid: cac6f0dc2956401479314ee4ca6ff0d1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.5
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: 372717748462116122, guid: cac6f0dc2956401479314ee4ca6ff0d1, type: 3}
       propertyPath: m_LocalPosition.y
@@ -466,6 +466,10 @@ PrefabInstance:
     - target: {fileID: 372717748462116122, guid: cac6f0dc2956401479314ee4ca6ff0d1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 372717748648794215, guid: cac6f0dc2956401479314ee4ca6ff0d1, type: 3}
+      propertyPath: m_Name
+      value: Table_Graphics
       objectReference: {fileID: 0}
     - target: {fileID: 1408640528367590046, guid: cac6f0dc2956401479314ee4ca6ff0d1, type: 3}
       propertyPath: hurtIndicator
@@ -1883,6 +1887,10 @@ PrefabInstance:
     - target: {fileID: 5256903346373350379, guid: 6e3361a793399cf41a6eb27bbfa1b675, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5256903347023794769, guid: 6e3361a793399cf41a6eb27bbfa1b675, type: 3}
+      propertyPath: m_Name
+      value: Guard_Graphics
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6e3361a793399cf41a6eb27bbfa1b675, type: 3}

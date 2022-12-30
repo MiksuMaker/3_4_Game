@@ -236,7 +236,7 @@ public class Draggable : MonoBehaviour
 
 
     #region DAMAGE
-    protected virtual void TakeDamage(float amount)
+    public virtual void TakeDamage(float amount)
     {
         //Debug.Log("Damage taken: " + amount);
 

@@ -45,19 +45,29 @@ public class Door : MonoBehaviour
     {
         // Check that there is nothing in front of the door
         Collider2D[] blockers;
-        blockers = Physics2D.OverlapCircleAll(transform.position, 0.4f);
+        blockers = Physics2D.OverlapCircleAll(transform.position, 0.4f,
+                                                                    LayerMask.GetMask("Draggable"));
+        if (blockers.Length == 0)
+        {
+            AccessDoor(guard);
+        }
+
         foreach (Collider2D c in blockers)
         {
+            Debug.Log("Name: " + c.gameObject.name);
+
             if (c.gameObject.layer == LayerMask.NameToLayer("Draggable"))
             {
                 // Something IS blocking the way
                 Debug.Log("Something is BLOCKING the door");
+
+                TryRemoveBarricade(c);
             }
             else
             {
                 // The door is passable
                 // ---> Go through
-                //AccessDoor(guard);
+                AccessDoor(guard);
             }
         }
     }
@@ -68,6 +78,19 @@ public class Door : MonoBehaviour
         animator.Play("Open");
 
         // Start
+    }
+
+    private void TryRemoveBarricade(Collider2D blocker)
+    {
+        // Damage and Spin the barricade
+        blocker.GetComponent<Draggable>().TakeDamage(10f);
+
+        // Kick it!
+        Rigidbody2D rb = blocker.GetComponent<Rigidbody2D>();
+
+        rb.AddForce(Vector2.up * Random.Range(1f, 2f) * rb.mass, ForceMode2D.Impulse);
+        rb.AddTorque(Random.Range(-7f, 7f), ForceMode2D.Impulse);
+
     }
 
     //IEnumerator TryToMoveGuardBehindDoor()  // Should be handled by the door?

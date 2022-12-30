@@ -186,7 +186,7 @@ public class SecurityController : Draggable
         }
     }
 
-    protected override void TakeDamage(float amount)
+    public override void TakeDamage(float amount)
     {
 
         amount = Mathf.Ceil(amount);
@@ -558,6 +558,12 @@ public class SecurityController : Draggable
 
     public bool DoorTrigger(Vector3 pos)
     {
+        // Check if the Guard is looking for a door
+        if (currentMode != aiMode.goToDoor)
+        {
+            return false;
+        }
+
         // Check if Door is current Target
         if (currentTarget.transform.position == pos)
         {
