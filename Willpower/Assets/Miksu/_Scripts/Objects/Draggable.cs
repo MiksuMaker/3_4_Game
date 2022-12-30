@@ -154,7 +154,8 @@ public class Draggable : MonoBehaviour
         // Calculate the direction to be dragged towards
         Vector2 thisPos = transform.position;
 
-        return /* DIRECTION: */ (mousePos - thisPos);
+        return /* DIRECTION: */ (mousePos - thisPos); // Damps with distance
+        //return /* DIRECTION: */ (mousePos - thisPos).normalized;  // Normalized
     }
     #endregion
 

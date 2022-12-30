@@ -33,6 +33,7 @@ public class Dragger : MonoBehaviour
     [Header("Physics")]
     [SerializeField]
     float grabForce = 50f;
+    int[] directions = {-1, 1};
     #endregion
 
     #region BUILTIN
@@ -103,10 +104,33 @@ public class Dragger : MonoBehaviour
         {
             if (obj != null)
             {
-                obj.DragMeAround(mousePos, grabForce);
+                obj.DragMeAround(mousePos, grabForce * 100f * Time.deltaTime);
             }
         }
     }
+
+    // TIME.DELTATIME TESTING ZONE
+
+    // Move along!
+
+    //
+    //private float deleteThis = 1f;
+    //private float time;
+    //private int frameCount = 0;
+    //private void Update()
+    //{
+    //    Debug.Log("Deltatime: " + Time.deltaTime);
+    //    //time += Time.deltaTime;
+    //    //frameCount++;
+
+    //    //if (time >= deleteThis)
+    //    //{
+    //    //    int frameRate = Mathf.RoundToInt(frameCount / time);
+    //    //    Debug.Log("Framerate: " + frameRate);
+    //    //    frameCount = 0;
+    //    //    time = 0f;
+    //    //}
+    //}
 
     private Vector2 GetMousePos()
     {
@@ -140,8 +164,16 @@ public class Dragger : MonoBehaviour
         //if (draggable.rb.velocity.magnitude < 0.1f)
         if (draggable.rb.angularVelocity < 0.5f)
         {
-            draggable.rb.AddTorque(Random.Range(-5f, 5f), ForceMode2D.Impulse);
+            draggable.rb.AddTorque(GiveRandomDirection(), ForceMode2D.Impulse);
         }
+    }
+
+    private float GiveRandomDirection()
+    {
+        int dir = directions[Random.Range(0, 2)];
+
+        // Return power torque
+        return (dir * Random.Range(3f, 5f));
     }
 
     public void UndragMe(Draggable draggable)

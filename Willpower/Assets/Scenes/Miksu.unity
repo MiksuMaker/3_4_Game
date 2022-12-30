@@ -1759,6 +1759,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3754696942545464964, guid: bc8de9ca1cb9d2a4d9e1079d4f51d98c, type: 3}
+      propertyPath: grabForce
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 3754696942545464964, guid: bc8de9ca1cb9d2a4d9e1079d4f51d98c, type: 3}
       propertyPath: targetMask.m_Bits
       value: 2688
       objectReference: {fileID: 0}
