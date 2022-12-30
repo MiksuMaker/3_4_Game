@@ -8,6 +8,8 @@ public class DoorManager : MonoBehaviour
     List<Door> doors = new List<Door>();
 
     GameObject player;
+    float heightDifferenceTolerance = 5f;
+
     #endregion
 
     #region SETUP
@@ -21,7 +23,7 @@ public class DoorManager : MonoBehaviour
             doors.Add(_door);
         }
 
-        Debug.Log("Number of doors: " + doors.Count);
+        //Debug.Log("Number of doors: " + doors.Count);
         #endregion
 
         // Get Player
@@ -34,7 +36,7 @@ public class DoorManager : MonoBehaviour
     #endregion
 
 
-    #region MOVING Guards
+    #region Guards AI
     public GameObject GoToNearestDoor(Vector3 currentPosition)
     {
         //Debug.Log("Doors[0]: " + doors)
@@ -55,17 +57,19 @@ public class DoorManager : MonoBehaviour
         {
             // Check which doors are on the same Y level or above
             //                                                   --> Not below
-            if (door.transform.position.y <= currentYpos /*- 1f*/)
+            if (door.transform.position.y <= currentYpos + 1f)
             {
                 viableDoors.Add(door);
             }
         }
 
+        // If no viable doors -> All are out of reach
+        if (viableDoors.Count == 0)
+        {
+            return null;
+        }
+
         // Check which doors are closest to the selected Y level
-
-
-        //Door closestDoor = viableDoors[0];
-        //Door closestDoor = candidateDoors[0];
         float highestYvalue = viableDoors[0].transform.position.y;
         foreach (Door door in viableDoors)
         {
@@ -99,7 +103,8 @@ public class DoorManager : MonoBehaviour
                 highestYvalue = door.transform.position.y;
             }
         }
-        Debug.Log("Highest Y value: " + highestYvalue);
+
+        //Debug.Log("Highest Y value: " + highestYvalue);
 
         List<Door> candidateDoors = new List<Door>();
         foreach (Door door in viableDoors)
@@ -114,22 +119,42 @@ public class DoorManager : MonoBehaviour
 
         // Get one of those
         int random = Random.Range(0, candidateDoors.Count);
-        //Debug.Log("Picked door height: " + candidateDoors[random].gameObject.transform.position.y);
 
         return candidateDoors[random].gameObject;
-
-        //return viableDoors[Random.Range(0, viableDoors.Count + 1)].gameObject;
     }
 
-    //IEnumerator TryToMoveGuardBehindDoor()  // Should be handled by the door?
-    //{
-    //    // Check if 
+    #endregion
 
-    //    //bool unspawned = false;
-    //    //while (unspawned)
-    //    //{
-    //    //    yield return new WaitForSeconds(0.5f);
-    //    //}
-    //}
+    #region Guard TRANSPORTING
+
+    public void TransportGuardBehindAnotherDoor(GameObject guard)
+    {
+
+        // Get Player Y coord
+        float playerY = player.transform.position.y;
+
+        // Get all the doors that are on that level or higher
+        List<Door> viableDoors = new List<Door>();
+
+        foreach (Door door in doors)
+        {
+            if (door.transform.position.y >= playerY - heightDifferenceTolerance)
+            {
+                viableDoors.Add(door);
+            }
+        }
+
+        // Transport Guard ownership to that Door
+        if (viableDoors.Count >= 1)
+        {
+            viableDoors[Random.Range(0, viableDoors.Count)].TransportGuard(guard);
+        }
+        else
+        {
+            // Random door if no viable doors
+            doors[Random.Range(0, doors.Count)].TransportGuard(guard);
+        }
+    }
+
     #endregion
 }

@@ -217,12 +217,12 @@ public class ProtagController : MonoBehaviour
 
         Debug.DrawLine(transform.position, nextPos);
         // Clamp
-        nextPos = Vector2.ClampMagnitude(nextPos, maxHoverSpeed);
+        //nextPos = Vector2.ClampMagnitude(nextPos, maxHoverSpeed);
+        nextPos = Vector2.MoveTowards(transform.position, nextPos, maxHoverSpeed);
 
         //Debug.Log("NextPos: " + nextPos);
 
         // Lerp the Protag towards mouse
-        //rb.MovePosition(nextPos);
         rb.MovePosition(nextPos);
     }
 
