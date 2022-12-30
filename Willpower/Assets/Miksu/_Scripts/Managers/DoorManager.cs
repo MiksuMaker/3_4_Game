@@ -33,66 +33,91 @@ public class DoorManager : MonoBehaviour
 
     #endregion
 
-    #region MOVING
+
+    #region MOVING Guards
     public GameObject GoToNearestDoor(Vector3 currentPosition)
     {
         //Debug.Log("Doors[0]: " + doors)
-        return doors[0].gameObject;
+        //return doors[0].gameObject;
 
-        //float yCoord = currentPosition.y;
+        float currentYpos = currentPosition.y;
 
-        //// Check if the only door
-        //if (doors.Count == 1)
-        //{
-        //    return doors[0].gameObject;
-        //}
+        // Check if the only door
+        if (doors.Count == 1)
+        {
+            return doors[0].gameObject;
+        }
 
-        ////Door nearestDoor = doors[0];
-        ////float nearest_Y_Level = doors[0].transform.position.y;
-
-
-        //List<Door> viableDoors = new List<Door>();
+        List<Door> viableDoors = new List<Door>();
 
 
-        //foreach (Door door in doors)
-        //{
-        //    // Check which doors are on the same level or above
+        foreach (Door door in doors)
+        {
+            // Check which doors are on the same Y level or above
+            //                                                   --> Not below
+            if (door.transform.position.y <= currentYpos /*- 1f*/)
+            {
+                viableDoors.Add(door);
+            }
+        }
 
-        //    if (door.transform.position.y <= yCoord)
-        //    {
-        //        viableDoors.Add(door);
-        //    }
-        //}
+        // Check which doors are closest to the selected Y level
 
-        //// Check which doors are closest on the Y level
+
         //Door closestDoor = viableDoors[0];
-        //foreach (Door door in viableDoors)
-        //{
-        //    // If challenger is lower than the closest Door
-        //    if (door.transform.position.y < closestDoor.transform.position.y)
-        //    {
-        //        // If smaller (further), remove from doors
-        //        viableDoors.Remove(door);
-        //    }
-        //    else
-        //    {
-        //        // Is same or higher?
-        //        if (door.transform.position.y == closestDoor.transform.position.y)
-        //        {
-        //            // Same, keep them both
-        //        }
-        //        else
-        //        {
-        //            // Challenger is higher, remove closest Door
-        //            viableDoors.Remove(closestDoor);
+        //Door closestDoor = candidateDoors[0];
+        float highestYvalue = viableDoors[0].transform.position.y;
+        foreach (Door door in viableDoors)
+        {
+            #region Old
+            ////if (door.transform.position.y < closestDoor.transform.position.y)
+            //if (door.transform.position.y < highestYvalue)
+            //{
+            //    // If smaller (further), remove from doors
+            //    candidateDoors.Remove(door);
+            //}
+            //else
+            //{
+            //    // Is same or higher?
+            //    //if (door.transform.position.y > closestDoor.transform.position.y)
+            //    if (door.transform.position.y > highestYvalue)
+            //    {
+            //        // Challenger is higher, remove closest Door
+            //        //candidateDoors.Remove(closestDoor);
 
-        //            // New closest door
-        //            closestDoor = door;
-        //        }
-        //    }
-        //}
+            //        // New closest Door
+            //        highestYvalue = door.transform.position.y;
+            //    }
+            //    // else
+            //    // --> Keep them both
+            //}
+            #endregion
 
-        //// Get one of those
+            if (door.transform.position.y > highestYvalue)
+            {
+                // Set the new gihgest y value
+                highestYvalue = door.transform.position.y;
+            }
+        }
+        Debug.Log("Highest Y value: " + highestYvalue);
+
+        List<Door> candidateDoors = new List<Door>();
+        foreach (Door door in viableDoors)
+        {
+            // If one of the doors with highest Y value
+            if (door.transform.position.y >= highestYvalue - 1f)
+            {
+                // add to the candidate list
+                candidateDoors.Add(door);
+            }
+        }
+
+        // Get one of those
+        int random = Random.Range(0, candidateDoors.Count);
+        //Debug.Log("Picked door height: " + candidateDoors[random].gameObject.transform.position.y);
+
+        return candidateDoors[random].gameObject;
+
         //return viableDoors[Random.Range(0, viableDoors.Count + 1)].gameObject;
     }
 

@@ -35,7 +35,7 @@ public class Door : MonoBehaviour
             // Check if this is the Door they are targeting
             if (guard.DoorTrigger(transform.position))
             {
-                Debug.Log("Guard trying to enter");
+                //Debug.Log("Guard trying to enter");
                 CheckIfCanEnterDoor(guard.gameObject);
             }
         }
@@ -54,12 +54,12 @@ public class Door : MonoBehaviour
 
         foreach (Collider2D c in blockers)
         {
-            Debug.Log("Name: " + c.gameObject.name);
+            //Debug.Log("Name: " + c.gameObject.name);
 
             if (c.gameObject.layer == LayerMask.NameToLayer("Draggable"))
             {
                 // Something IS blocking the way
-                Debug.Log("Something is BLOCKING the door");
+                //Debug.Log("Something is BLOCKING the door");
 
                 TryRemoveBarricade(c);
             }
