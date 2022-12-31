@@ -100,11 +100,23 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Weapons_0
+      name: Taser_Off
       rect:
         serializedVersion: 2
         x: 0
@@ -125,7 +137,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Weapons_1
+      name: Taser_1
       rect:
         serializedVersion: 2
         x: 24
@@ -146,7 +158,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Weapons_2
+      name: Taser_2
       rect:
         serializedVersion: 2
         x: 48
@@ -167,7 +179,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Weapons_3
+      name: Taser_3
       rect:
         serializedVersion: 2
         x: 72
@@ -188,7 +200,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Weapons_4
+      name: Taser_4
       rect:
         serializedVersion: 2
         x: 96
@@ -209,7 +221,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Weapons_5
+      name: Gun_Off
       rect:
         serializedVersion: 2
         x: 0
@@ -230,7 +242,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Weapons_6
+      name: Gun_1
       rect:
         serializedVersion: 2
         x: 24
@@ -251,7 +263,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Weapons_7
+      name: Gun_2
       rect:
         serializedVersion: 2
         x: 48
@@ -272,7 +284,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Weapons_8
+      name: Gun_3
       rect:
         serializedVersion: 2
         x: 72
@@ -293,7 +305,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Weapons_9
+      name: Gun_4
       rect:
         serializedVersion: 2
         x: 96
@@ -324,16 +336,16 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Weapons_8: -743246586
-      Weapons_7: -1160633822
-      Weapons_0: 1636442003
-      Weapons_6: 260762683
-      Weapons_9: 466676289
-      Weapons_5: -1143186425
-      Weapons_1: -1398909092
-      Weapons_4: -2067617891
-      Weapons_2: -844376063
-      Weapons_3: 365496295
+      Taser_3: 365496295
+      Gun_3: -743246586
+      Taser_1: -1398909092
+      Taser_4: -2067617891
+      Gun_2: -1160633822
+      Gun_4: 466676289
+      Gun_Off: -1143186425
+      Taser_Off: 1636442003
+      Gun_1: 260762683
+      Taser_2: -844376063
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -31,12 +31,12 @@ public class SecurityController : Draggable
 
     float yAxisTreshold = 2f;
 
-    private enum Orientation
+    public enum Orientation
     {
         left, right
     }
     //Orientation 
-    Orientation currentOrientation = Orientation.left;
+    public Orientation currentOrientation = Orientation.left;
     float orientation = 1f;
 
     #endregion
@@ -483,7 +483,7 @@ public class SecurityController : Draggable
         {
             if (!readyForNewDecisions) { return; }
 
-            Debug.Log("Looking for door!");
+            //Debug.Log("Looking for door!");
 
             // Player is too high! Look for nearest door!
             currentMode = aiMode.goToDoor;
