@@ -35,9 +35,13 @@ public class SecurityController : Draggable
     {
         left, right
     }
-    //Orientation 
+    //Orientation
+    [HideInInspector]
     public Orientation currentOrientation = Orientation.left;
     float orientation = 1f;
+
+    public bool isRanged = false;
+    private GameObject arm;
 
     #endregion
 
@@ -58,6 +62,7 @@ public class SecurityController : Draggable
 
         // Get references
         graphics = animator.gameObject;
+        if (isRanged) { arm = GetComponentInChildren<ArmController>().gameObject; }
 
         AI_Start();
     }
@@ -227,6 +232,8 @@ public class SecurityController : Draggable
     {
         downed = true;
         ChangeMode(aiMode.stunned);
+
+        if (isRanged) { arm.SetActive(false); }
     }
 
     private void CheckHealth()
