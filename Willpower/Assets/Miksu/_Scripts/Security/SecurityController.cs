@@ -56,7 +56,14 @@ public class SecurityController : Draggable
         AI_Start();
     }
 
+    private void OnEnable()
+    {
+        // Restart the FlyTimer
+        StartCoroutine(FlyTimer());
 
+        //Debug.Log("Enabling Guard");
+        //ChangeLayer(Layer.idle);
+    }
 
 
     protected virtual void FixedUpdate()
@@ -108,15 +115,19 @@ public class SecurityController : Draggable
     {
         while (true)
         {
+            Debug.Log("FlyTimer is on");
+
             if (gameObject.layer == LayerMask.NameToLayer("Flying"))
             {
                 // Release the freeze on rotation
-                RotationOnOff(false);
+                FreezeRotation(false);
 
                 // Keep the Layer on Flying as long as the timer hasn't run out
 
                 while (flyTime > 0)
                 {
+                    //Debug.Log("Flytime: " + flyTime);
+
                     flyTime -= Time.deltaTime;
 
                     // UI
@@ -125,28 +136,35 @@ public class SecurityController : Draggable
                     yield return new WaitForFixedUpdate();
                 }
 
-                // Reset rotation
-                RotationOnOff(true);
-
-                // Change the Layer back to Draggable
-                ChangeLayer(Layer.idle);
-
-                // Change the AI Mode to chase
-                ChangeMode(aiMode.chase);
+                ResetGuard();
             }
 
             yield return new WaitForSeconds(0.1f);
         }
     }
 
-    protected void RotationOnOff(bool onOff)
+    public void ResetGuard()
+    {
+        Debug.Log("Resetting Guard");
+
+        // Reset rotation
+        FreezeRotation(true);
+
+        // Change the Layer back to Draggable
+        ChangeLayer(Layer.idle);
+
+        // Change the AI Mode to chase
+        ChangeMode(aiMode.chase);
+    }
+
+    protected void FreezeRotation(bool onOff)
     {
         if (onOff == false) // Unfreeze rotation
         {
             rb.freezeRotation = false;
+
             // Give a little spin
             if (rb.angularVelocity < 0.1f) { rb.AddTorque(Random.Range(-0.2f, 0.2f), ForceMode2D.Impulse); }
-
         }
         else    // Reset rotation
         {
@@ -470,8 +488,8 @@ public class SecurityController : Draggable
         {
             // Player is not on this level
             // --> Either ROAM
-            //         OR
-            //              GoToDoor
+            //                  OR
+            //                      GoToDoor
 
             #region Roam or GoTODoor
             // Check that the decisions isn't made already
