@@ -17,12 +17,19 @@ public class SecurityController : Draggable
     [SerializeField]
     float maxVelocity = 10f;
 
+    private float jumpSeed = 1f;
+    bool readyForJump = true;
+
     public enum aiMode
     {
         chase, goToDoor, idle, struggle, stunned, roam
     }
     public aiMode currentMode = aiMode.chase;
     private bool downed = false;
+    private float timeBetweenDecisions = 1f;
+    private bool readyForNewDecisions = true;
+
+    float yAxisTreshold = 2f;
 
     private enum Orientation
     {
@@ -32,7 +39,6 @@ public class SecurityController : Draggable
     Orientation currentOrientation = Orientation.left;
     float orientation = 1f;
 
-    float yAxisTreshold = 2f;
     #endregion
 
 
@@ -61,8 +67,10 @@ public class SecurityController : Draggable
         // Restart the FlyTimer
         StartCoroutine(FlyTimer());
 
-        //Debug.Log("Enabling Guard");
-        //ChangeLayer(Layer.idle);
+        ChangeMode(aiMode.chase);
+
+        StartCoroutine(DecisionDelayer(1f));
+        StartCoroutine(JumpDelay());
     }
 
 
@@ -115,8 +123,6 @@ public class SecurityController : Draggable
     {
         while (true)
         {
-            Debug.Log("FlyTimer is on");
-
             if (gameObject.layer == LayerMask.NameToLayer("Flying"))
             {
                 // Release the freeze on rotation
@@ -145,8 +151,6 @@ public class SecurityController : Draggable
 
     public void ResetGuard()
     {
-        Debug.Log("Resetting Guard");
-
         // Reset rotation
         FreezeRotation(true);
 
@@ -168,31 +172,13 @@ public class SecurityController : Draggable
         }
         else    // Reset rotation
         {
-            //StartCoroutine(ResetRotation());
             rb.SetRotation(0f);
             rb.freezeRotation = true;
         }
     }
+    #endregion
 
-    IEnumerator ResetRotation()
-    {
-        WaitForSeconds interval = new WaitForSeconds(0.1f);
-        float getUpTime = 1f;
-        float timePassed = 0f;
-
-        while (timePassed <= getUpTime)
-        {
-            // Rotate the character upright
-            transform.rotation = Quaternion.Lerp(transform.rotation,
-                                                 Quaternion.Euler(0f, 0f, 0f),
-                                                 timePassed);
-
-            timePassed += Time.deltaTime;
-
-            yield return interval;
-        }
-    }
-
+    #region HEALTH
     protected override void Highlight()
     {
         if (animator != null)
@@ -241,6 +227,14 @@ public class SecurityController : Draggable
     {
         downed = true;
         ChangeMode(aiMode.stunned);
+    }
+
+    private void CheckHealth()
+    {
+        if (health < 0f)
+        {
+            ChangeMode(aiMode.stunned);
+        }
     }
     #endregion
 
@@ -314,6 +308,9 @@ public class SecurityController : Draggable
 
         // Find Door Manager
         doorManager = FindObjectOfType<DoorManager>(); if (!doorManager) { Debug.Log("No DoorManager found!"); }
+
+        // Seed the jump
+        jumpSeed = Random.Range(0.5f, 1f);
     }
 
     private void AI_Update()
@@ -359,6 +356,9 @@ public class SecurityController : Draggable
                 PlayAnimation(AnimationState.run);
 
                 MoveForwards();
+
+                // Jump
+                if (readyForJump) { DoJump(); StartCoroutine(JumpDelay()); }
 
                 break;
 
@@ -476,16 +476,26 @@ public class SecurityController : Draggable
 
     protected void CheckPlayerY_Pos()
     {
+        // Check if decisions are timely
+
         // Check if Player is ABOVE
         if (player.transform.position.y > (transform.position.y + yAxisTreshold))
         {
+            if (!readyForNewDecisions) { return; }
+
+            Debug.Log("Looking for door!");
+
             // Player is too high! Look for nearest door!
             currentMode = aiMode.goToDoor;
             currentTarget = doorManager.GoToNearestDoor(transform.position);
+
+            StartCoroutine(DecisionDelayer(Random.Range(3f, 5f)));
         }
         // Check if the Player is BELOW
         else if (player.transform.position.y < (transform.position.y - yAxisTreshold))
         {
+            if (!readyForNewDecisions) { return; }
+
             // Player is not on this level
             // --> Either ROAM
             //                  OR
@@ -508,13 +518,29 @@ public class SecurityController : Draggable
             //    }
             //}
             #endregion
+
         }
         // If the Player is ON THE SAME LEVEL
         else
         {
             // Chase!
             currentMode = aiMode.chase;
+
+            if (!readyForNewDecisions) { return; }
+            StartCoroutine(DecisionDelayer(Random.Range(2f, 4f)));
         }
+    }
+
+
+    private IEnumerator DecisionDelayer(float time)
+    {
+        readyForNewDecisions = false;
+
+        // Wait
+        yield return new WaitForSeconds(time);
+
+        // Activate decision making again
+        readyForNewDecisions = true;
     }
 
     #region Turning
@@ -573,6 +599,21 @@ public class SecurityController : Draggable
 
     }
 
+    private void DoJump()
+    {
+        // Jump!
+        rb.AddForce(Vector2.up * 5f, ForceMode2D.Impulse);
+    }
+
+    private IEnumerator JumpDelay()
+    {
+        // Regain jump stamina
+        readyForJump = false;
+        yield return new WaitForSeconds(jumpSeed + Random.Range(0.2f, 1f));
+
+        readyForJump = true;
+    }
+
 
     public bool DoorTrigger(Vector3 pos)
     {
@@ -594,11 +635,4 @@ public class SecurityController : Draggable
 
     #endregion
 
-    private void CheckHealth()
-    {
-        if (health < 0f)
-        {
-            ChangeMode(aiMode.stunned);
-        }
-    }
 }
