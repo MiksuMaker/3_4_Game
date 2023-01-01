@@ -32,6 +32,9 @@ public class ArmController : MonoBehaviour
 
     private void Update()
     {
+        // Check that the guard isn't dragged around
+        if (guard.currentMode == SecurityController.aiMode.struggle) { return; }
+
         if (CheckForLineOfSight())
         {
             AimTowardsPlayer();
@@ -56,7 +59,7 @@ public class ArmController : MonoBehaviour
         {
             yield return tick;
 
-            if (CheckForLineOfSight())
+            if (CheckForLineOfSight() && guard.currentMode != SecurityController.aiMode.struggle)
             {
                 currentPressure += wait;
 
@@ -82,15 +85,15 @@ public class ArmController : MonoBehaviour
 
     private void Shoot()
     {
-        Debug.Log("Bang!");
-
         animator.Play("GunShoot");
 
         if (bullet != null)
         {
             //Quaternion rot = new Quaternion(transform.rotation.x, transform.rotation.y, -transform.rotation.z, 1f);
-            Quaternion rot = Quaternion.Inverse(gun.transform.rotation);
-            Instantiate(bullet, shootPoint.transform.position, rot);
+            //Quaternion rot = Quaternion.Inverse(gun.transform.rotation);
+            //Vector3 opposite = -gun.transform.right;
+            //Quaternion rot = Quaternion.Euler(opposite);
+            Instantiate(bullet, shootPoint.transform.position, shootPoint.transform.rotation);
         }
     }
 
@@ -156,7 +159,7 @@ public class ArmController : MonoBehaviour
     private Vector3 PPos()
     {
         // Get player position with added y coord so that the aim is at center of Player
-        Vector3 desiredAimPos = new Vector3(player.transform.position.x, player.transform.position.y + 1f);
+        Vector3 desiredAimPos = new Vector3(player.transform.position.x, player.transform.position.y + 0.5f);
 
         return desiredAimPos;
     }

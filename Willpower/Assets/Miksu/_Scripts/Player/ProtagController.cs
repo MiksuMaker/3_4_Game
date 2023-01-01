@@ -25,6 +25,7 @@ public class ProtagController : MonoBehaviour
     float hoverSpeed = 0.5f;
     [SerializeField]
     float maxHoverSpeed = 15f;
+    float yOffset = 0.2f;
 
     Vector2 lastPos = Vector2.zero;
 
@@ -220,7 +221,6 @@ public class ProtagController : MonoBehaviour
         //nextPos = Vector2.ClampMagnitude(nextPos, maxHoverSpeed);
         nextPos = Vector2.MoveTowards(transform.position, nextPos, maxHoverSpeed);
 
-        //Debug.Log("NextPos: " + nextPos);
 
         // Lerp the Protag towards mouse
         rb.MovePosition(nextPos);
@@ -238,7 +238,9 @@ public class ProtagController : MonoBehaviour
 
     private Vector2 GetMousePos()
     {
-        return Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        pos = new Vector2(pos.x, pos.y - yOffset);
+        return pos;
     }
 
     #endregion
@@ -314,6 +316,13 @@ public class ProtagController : MonoBehaviour
                 currentMode = GameMode.hurt;
                 PlayAnimation(AnimationState.hurt);
             }
+        }
+        // Check if Bullet
+        else if (collision.gameObject.layer == LayerMask.NameToLayer("Bullet")
+                 || collision.gameObject.layer == LayerMask.NameToLayer("LethalBullet"))
+        {
+            currentMode = GameMode.hurt;
+            PlayAnimation(AnimationState.hurt);
         }
     }
 }

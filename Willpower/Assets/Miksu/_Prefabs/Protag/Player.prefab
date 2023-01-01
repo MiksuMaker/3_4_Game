@@ -98,6 +98,12 @@ MonoBehaviour:
   maxVelocity: 15
   hoverSpeed: 40
   maxHoverSpeed: 0.4
+  guardLayer:
+    serializedVersion: 2
+    m_Bits: 2048
+  bullets:
+    serializedVersion: 2
+    m_Bits: 24576
 --- !u!1 &6954420898177014012
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,8 +18,8 @@ TagManager:
   - Character
   - DraggableCharacter
   - Door
-  - 
-  - 
+  - Bullet
+  - LethalBullet
   - 
   - 
   - 

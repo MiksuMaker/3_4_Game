@@ -6,12 +6,8 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] float bulletSpeed = 5f;
 
-    [SerializeField] LayerMask[] hitLayers;
+    //[SerializeField] LayerMask[] hitLayers;
 
-    private void Start()
-    {
-        
-    }
 
     private void FixedUpdate()
     {
@@ -23,13 +19,19 @@ public class Bullet : MonoBehaviour
         // Move Forwards
         transform.position = (transform.position + transform.right * bulletSpeed * Time.deltaTime);
 
-        // Check for collisions
-        CheckCollisions();
     }
 
-    private void CheckCollisions()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Finish me!!!");
-        //if (Physics2D.OverlapCircle(transform.position, 0.1f, LayerMask.LayerToName(hitLayers)))
+
+        //if (collision.gameObject.layer == LayerMask.NameToLayer("Default"))
+        //{
+        //    //Debug.Log("Hit Layer " + collision.gameObject.layer.ToString());
+
+        //    // Hit
+        //}
+
+        // Destroy
+        Destroy(gameObject);
     }
 }
