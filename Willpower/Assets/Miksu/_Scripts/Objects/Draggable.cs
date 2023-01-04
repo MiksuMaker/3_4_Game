@@ -109,7 +109,7 @@ public class Draggable : MonoBehaviour
         ChangeLayer(Layer.flying);
     }
 
-    public void DragMeAround(Vector2 mousePos, float dragForce)
+    public virtual void DragMeAround(Vector2 mousePos, float dragForce)
     {
         // Get the distance between mouse and this object
 

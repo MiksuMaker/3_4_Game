@@ -152,10 +152,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5de6947e4625cc542a7259dd191902ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  velocityHurtLimit: 5
+  MAXhealth: 1
+  health: 0
+  hurtIndicator: {fileID: 4344682802275429819, guid: 51674621ad0a6cc4f9a67f9cb586a123, type: 3}
+  mass: 10
+  velocityLimit: 5
+  currentLayer: 0
+  rb: {fileID: 0}
+  maxDistance: 2
+  minDistance: 0.1
   bulletSpeed: 5
-  hitLayers:
-  - serializedVersion: 2
-    m_Bits: 1
 --- !u!61 &751065729
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -195,8 +202,8 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_LinearDrag: 1
+  m_AngularDrag: 100
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0

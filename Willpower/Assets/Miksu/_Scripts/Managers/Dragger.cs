@@ -89,6 +89,7 @@ public class Dragger : MonoBehaviour
         // Add random torque
         foreach (Draggable d in objectsInPull)
         {
+            if (d is not Bullet)
             AddRandomTorque(d);
         }
     }

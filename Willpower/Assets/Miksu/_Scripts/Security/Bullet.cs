@@ -2,16 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Bullet : Draggable
 {
     [SerializeField] float bulletSpeed = 5f;
 
     //[SerializeField] LayerMask[] hitLayers;
 
 
-    private void FixedUpdate()
+    protected override void FixedUpdate()
     {
         FlyForwards();
+    }
+
+    public override void DragMeAround(Vector2 mousePos, float dragForce)
+    {
+        base.DragMeAround(mousePos, dragForce * 0.01f);
     }
 
     private void FlyForwards()
@@ -31,6 +36,12 @@ public class Bullet : MonoBehaviour
         //    // Hit
         //}
 
+        if (hurtIndicator != null)
+        {
+            GameObject hurt = Instantiate(hurtIndicator, transform.position, transform.rotation) as GameObject;
+            hurt.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+            Destroy(hurt, 1f);
+        }
         // Destroy
         Destroy(gameObject);
     }
